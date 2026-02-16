@@ -90,6 +90,8 @@ Per un ambiente di produzione, configura le regole di sicurezza nel Firebase Con
    - Aggiornerà la lista dei "Dati Salvati nel Database"
 5. Usa il pulsante "Aggiorna Dati" per ricaricare i dati dal database
 
+📚 **Per esempi dettagliati e casi d'uso**, consulta [EXAMPLES.md](EXAMPLES.md)
+
 ## 🛠️ Tecnologie Utilizzate
 
 - **HTML5**: Struttura della pagina
