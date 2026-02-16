@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Fede - Caricamento PDF</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Agenda Fede</h1>
+            <p>Carica file PDF per estrarre e salvare i dati</p>
+        </header>
+
+        <main>
+            <!-- Sezione Upload PDF -->
+            <section class="upload-section">
+                <h2>Carica PDF</h2>
+                <div class="upload-container">
+                    <input type="file" id="pdfInput" accept=".pdf" />
+                    <button id="uploadBtn" class="btn-primary">Carica e Analizza</button>
+                </div>
+                <div id="uploadStatus" class="status-message"></div>
+            </section>
+
+            <!-- Sezione Dati Estratti -->
+            <section class="data-section">
+                <h2>Dati Estratti dal PDF</h2>
+                <div id="extractedData" class="data-display">
+                    <p class="empty-state">Nessun dato estratto. Carica un PDF per iniziare.</p>
+                </div>
+            </section>
+
+            <!-- Sezione Dati Salvati -->
+            <section class="saved-section">
+                <h2>Dati Salvati nel Database</h2>
+                <button id="refreshBtn" class="btn-secondary">Aggiorna Dati</button>
+                <div id="savedData" class="data-list">
+                    <p class="empty-state">Nessun dato salvato nel database.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Agenda Fede - Gestione documenti PDF con Firebase</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
