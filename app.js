@@ -1,6 +1,9 @@
 // Configurazione PDF.js
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
+// Costanti
+const MAX_DISPLAYED_URLS = 3;
+
 // Elementi DOM
 const pdfInput = document.getElementById('pdfInput');
 const uploadBtn = document.getElementById('uploadBtn');
@@ -130,10 +133,11 @@ function extractStructuredData(text) {
     }
     
     // Cerca numeri di telefono (formato italiano e internazionale)
-    const phoneRegex = /(\+?\d{1,4}[\s-]?)?\(?\d{1,4}\)?[\s.-]?\d{1,4}[\s.-]?\d{1,9}/g;
+    // Pattern più specifico per telefoni validi
+    const phoneRegex = /(\+39[\s]?)?((3[1-9]\d)|(0\d{1,4}))[\s-]?\d{6,8}/g;
     const phones = text.match(phoneRegex);
     if (phones && phones.length > 0) {
-        structured.phones = [...new Set(phones.filter(p => p.length >= 8))];
+        structured.phones = [...new Set(phones)];
     }
     
     // Cerca date (vari formati)
@@ -198,7 +202,7 @@ function displayExtractedData(data) {
             html += `<li>Codici Fiscali: ${data.structuredData.codiciFiscali.join(', ')}</li>`;
         }
         if (data.structuredData.urls) {
-            html += `<li>URL trovati: ${data.structuredData.urls.slice(0, 3).join(', ')}${data.structuredData.urls.length > 3 ? '...' : ''}</li>`;
+            html += `<li>URL trovati: ${data.structuredData.urls.slice(0, MAX_DISPLAYED_URLS).join(', ')}${data.structuredData.urls.length > MAX_DISPLAYED_URLS ? '...' : ''}</li>`;
         }
         
         html += `<li>Parole: ${data.structuredData.wordCount}</li>`;

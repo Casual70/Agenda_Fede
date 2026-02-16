@@ -49,13 +49,13 @@ Applicazione web per caricare file PDF, estrarre automaticamente i dati e salvar
 
 ```javascript
 const firebaseConfig = {
-    apiKey: "TUA_API_KEY",
-    authDomain: "TUO_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://TUO_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "TUO_PROJECT_ID",
-    storageBucket: "TUO_PROJECT_ID.appspot.com",
-    messagingSenderId: "TUO_MESSAGING_SENDER_ID",
-    appId: "TUA_APP_ID"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 ```
 
