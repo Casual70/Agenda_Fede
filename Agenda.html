@@ -1,1 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Turni</title>
+    <style>
+        /* STILI ISPIRATI ALLO SCREENSHOT (Minimal, Teal/Sage Green) */
+        :root {
+            --primary-color: #5F9EA0; /* Colore verde acqua/salvia */
+            --text-main: #333333;
+            --text-light: #666666;
+            --bg-page: #f0f2f5;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .document-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            padding: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Linee decorative in alto e in basso */
+        .deco-lines {
+            height: 12px;
+            background-color: #d1e0e0;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+        .deco-lines.thin { height: 6px; }
+
+        h1 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 2.2em;
+            letter-spacing: 2px;
+            margin-top: 30px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 0.9em;
+            margin-bottom: 40px;
+        }
+
+        /* Sezione di Caricamento e Filtri */
+        .controls-section {
+            background-color: #f9fbfb;
+            border: 1px dashed var(--primary-color);
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+        }
+
+        .controls-section button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .controls-section button:hover { background-color: #4f8587; }
+
+        /* Stile Agenda per i Dati */
+        .agenda-item {
+            margin-bottom: 30px;
+        }
+
+        .agenda-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .agenda-content {
+            margin-left: 25px;
+            line-height: 1.8;
+        }
+
+        .agenda-content li {
+            list-style-type: lower-alpha; /* a), b), c) come nello screen */
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 0.95em;
+        }
+
+        /* Footer */
+        .footer-info {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 0.85em;
+            color: var(--text-light);
+        }
+        .footer-info span { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+        <div class="deco-lines"></div>
+        <div class="deco-lines thin"></div>
+
+        <h1>AGENDA TURNI</h1>
+        <div class="subtitle" id="agenda-subtitle">Attendere caricamento dati...</div>
+
+        <div class="controls-section">
+            <h3 style="margin-top:0; color:var(--primary-color); font-size:1em;">Gestione Dati</h3>
+            <input type="file" id="pdfUpload" accept=".pdf">
+            <button onclick="processAndUpload()">Elabora PDF e Salva</button>
+            <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
+            <input type="text" id="filterInput" placeholder="Es. Filtra per Operatore (FED)..." style="padding:5px; width:250px;">
+            <button onclick="applyFilter()" style="background-color: #666;">Filtra</button>
+        </div>
+
+        <div id="agenda-content-area">
+            </div>
+
+        <div class="footer-info">
+            <span><strong>Mese:</strong> Febbraio 2026</span>
+            <span><strong>Stato:</strong> Sincronizzato con Firebase</span>
+        </div>
+        <div class="deco-lines" style="margin-top: 20px;"></div>
+        <div class="deco-lines thin"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        /* * 1. CONFIGURAZIONE FIREBASE 
+         * Sostituisci questi dati con quelli del tuo progetto Firebase!
+         */
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKchLtVCALojZz8Yd0o_L8L-bW7PsZ9hc",
+            authDomain: "agenda-fede.firebaseapp.com",
+            projectId: "agenda-fede",
+            storageBucket: "agenda-fede.firebasestorage.app",
+            messagingSenderId: "145413232967",
+            appId: "1:145413232967:web:0d8c98d4f48b3c241a9462"
+        };
+
+        // Inizializza Firebase (Commentato per evitare errori finché non metti le tue chiavi vere)
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- DATI SIMULATI (MOCK) ---
+        // Poiché estrarre il PDF lato client è complesso, simuliamo i dati 
+        // che un buon estrattore ricaverebbe dal tuo PDF "TURNI FEBBRAIO 2026"
+        let turniData = [
+            { id: 1, day: "1 (FDO)", shifts: ["MATT 1: FED (8:30-14:00)", "MATT 2: SAN (10:00-15:00)", "POM 1: CHIA (15:00-20:00)"] },
+            { id: 2, day: "2 (LU)", shifts: ["NOTTE 2: ERME", "CENTR: STE", "POM 1: BAD", "POM 2: PET", "NOTTE 1: SAN"] },
+            { id: 3, day: "3 (MA)", shifts: ["NOTTE 2: PET (0:00-9:00)", "MATT 1: ANNA (7:30-14:30)", "CENTR: CAR (19:00-14:00)", "RIUNIONE D'EQUIPE: CHIA"] }
+        ];
+
+        // Numeri romani per lo stile Agenda
+        const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
+        // Funzione per stampare i dati sulla pagina
+        function renderAgenda(dataToRender) {
+            const container = document.getElementById('agenda-content-area');
+            container.innerHTML = ''; // Pulisci area
+
+            document.getElementById('agenda-subtitle').innerText = "Estrazione Dati: Mese di Febbraio 2026";
+
+            dataToRender.forEach((dayData, index) => {
+                let html = `
+                    <div class="agenda-item">
+                        <div class="agenda-title">${romanNumerals[index] || index + 1}. GIORNO ${dayData.day}</div>
+                        <ul class="agenda-content">
+                `;
+                
+                dayData.shifts.forEach(shift => {
+                    html += `<li>${shift}</li>`;
+                });
+
+                html += `</ul></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        // Simula il click del bottone "Elabora PDF"
+        window.processAndUpload = async function() {
+            const fileInput = document.getElementById('pdfUpload');
+            if (fileInput.files.length === 0) {
+                alert("Seleziona prima un file PDF!");
+                return;
+            }
+            
+            alert("Lettura PDF in corso... (Simulazione). Salvataggio su Firebase...");
+
+            /* * ESEMPIO DI CODICE FIREBASE REALE DA USARE IN FUTURO:
+             * * try {
+             * turniData.forEach(async (turno) => {
+             * await addDoc(collection(db, "turni_febbraio"), turno);
+             * });
+             * alert("Dati salvati con successo su Firestore!");
+             * } catch (e) {
+             * console.error("Errore: ", e);
+             * }
+             */
+
+            // Mostriamo i dati a schermo per il prototipo
+            renderAgenda(turniData);
+        }
+
+        // Simula il filtro (Funzionalità "Strada facendo")
+        window.applyFilter = function() {
+            const query = document.getElementById('filterInput').value.toLowerCase();
+            
+            const filteredData = turniData.map(dayInfo => {
+                // Filtra solo i turni (le stringhe) che contengono il nome cercato
+                const filteredShifts = dayInfo.shifts.filter(shift => shift.toLowerCase().includes(query));
+                return { ...dayInfo, shifts: filteredShifts };
+            }).filter(dayInfo => dayInfo.shifts.length > 0); // Mostra solo i giorni in cui l'operatore lavora
+
+            renderAgenda(filteredData);
+        }
+
+        // Disegna una prima volta l'interfaccia vuota o con dati di test
+        // renderAgenda(turniData); // Rimuovi il commento se vuoi vederli subito all'apertura
+    </script>
+</body>
+</html>
