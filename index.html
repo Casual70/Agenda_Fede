@@ -82,23 +82,72 @@
         }
 
         .agenda-title {
-            color: var(--primary-color);
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
+        .day-label {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.05em;
+            white-space: nowrap;
+        }
+
+        .day-separator {
+            flex: 1;
+            height: 1px;
+            background-color: #d1e0e0;
+            display: block;
+        }
+
         .agenda-content {
-            margin-left: 25px;
+            margin-left: 15px;
+            padding-left: 0;
             line-height: 1.8;
         }
 
-        .agenda-content li {
+        .shift-row {
             list-style-type: none;
-            margin-bottom: 8px;
-            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 6px;
             font-size: 0.95em;
+            padding: 3px 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .shift-name {
+            width: 90px;
+            font-weight: bold;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .shift-op {
+            width: 55px;
+            font-weight: bold;
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .shift-time {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* Classi per evidenziare turni */
+        .shift-row.highlight {
+            background-color: #e8f4f4;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .shift-row.highlight-warning {
+            background-color: #fff8e1;
+            border-left: 3px solid #f0a500;
         }
 
         /* Footer */
@@ -129,6 +178,7 @@
             <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
             <input type="text" id="filterInput" placeholder="Es. Filtra per Operatore (FED)..." style="padding:5px; width:250px;">
             <button onclick="applyFilter()" style="background-color: #666;">Filtra</button>
+            <button onclick="svuotaCollection()" style="background-color: #c0392b; margin-left: 10px;">🗑 Svuota DB</button>
         </div>
 
         <div id="agenda-content-area">
@@ -160,19 +210,54 @@
 
         // Dati di esempio (usati solo al primo caricamento PDF)
         const turniDataMock = [
-            { id: 1, day: "1 (FDO)", shifts: ["MATT 1: FED (8:30-14:00)", "MATT 2: SAN (10:00-15:00)", "POM 1: CHIA (15:00-20:00)"] },
-            { id: 2, day: "2 (LU)", shifts: ["NOTTE 2: ERME", "CENTR: STE", "POM 1: BAD", "POM 2: PET", "NOTTE 1: SAN"] },
-            { id: 3, day: "3 (MA)", shifts: ["NOTTE 2: PET (0:00-9:00)", "MATT 1: ANNA (7:30-14:30)", "CENTR: CAR (19:00-14:00)", "RIUNIONE D'EQUIPE: CHIA"] }
+            {
+                id: 1,
+                dayLabel: "Domenica 1 Febbraio",
+                shifts: [
+                    { name: "NOTTE 2", op: "CAR",  time: "0:00 - 9:00" },
+                    { name: "MATT 1",  op: "FED",  time: "8:30 - 14:00" },
+                    { name: "MATT 2",  op: "SAN",  time: "10:00 - 15:00" },
+                    { name: "POM 1",   op: "CHIA", time: "15:00 - 20:00" },
+                    { name: "NOTTE 1", op: "EMA",  time: "20:00 - 24:00" }
+                ]
+            },
+            {
+                id: 2,
+                dayLabel: "Lunedì 2 Febbraio",
+                shifts: [
+                    { name: "NOTTE 2", op: "CHIA", time: "0:00 - 9:00" },
+                    { name: "MATT 1",  op: "ERME", time: "7:30 - 14:30" },
+                    { name: "CENTR.",  op: "STE",  time: "14:00 - 19:00" },
+                    { name: "POM 1",   op: "SAN",  time: "15:00 - 21:00" },
+                    { name: "POM 2",   op: "BAD",  time: "15:30 - 22:30" },
+                    { name: "NOTTE 1", op: "PET",  time: "22:00 - 24:00" }
+                ]
+            },
+            {
+                id: 3,
+                dayLabel: "Martedì 3 Febbraio",
+                shifts: [
+                    { name: "NOTTE 2", op: "PET",  time: "0:00 - 9:00" },
+                    { name: "MATT 1",  op: "ANNA", time: "7:30 - 14:30" },
+                    { name: "CENTR.",  op: "CAR",  time: "9:00 - 14:00" },
+                    { name: "POM 1",   op: "CHIA", time: "15:00 - 21:00" },
+                    { name: "NOTTE 1", op: "FED",  time: "20:00 - 24:00" }
+                ]
+            }
         ];
 
         let turniData = [];
 
-        const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
-                               "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
-                               "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI"];
-
         function setStatus(msg) {
             document.getElementById('status-text').innerHTML = `<strong>Stato:</strong> ${msg}`;
+        }
+
+        function parseShift(shift) {
+            // Supporta sia oggetti strutturati che stringhe legacy "NOME: OP (time)"
+            if (typeof shift === 'object') return shift;
+            const match = shift.match(/^(.+?):\s*([^\s(]+)(?:\s*\(([^)]+)\))?$/);
+            if (match) return { name: match[1].trim(), op: match[2].trim(), time: match[3] || '' };
+            return { name: shift, op: '', time: '' };
         }
 
         function renderAgenda(dataToRender) {
@@ -185,18 +270,46 @@
                 return;
             }
 
-            dataToRender.forEach((dayData, index) => {
+            dataToRender.forEach((dayData) => {
+                const label = dayData.dayLabel || dayData.day || `Giorno ${dayData.id}`;
                 let html = `
                     <div class="agenda-item">
-                        <div class="agenda-title">${romanNumerals[index] || index + 1}. GIORNO ${dayData.day}</div>
+                        <div class="agenda-title">
+                            <span class="day-separator"></span>
+                            <span class="day-label">${label}</span>
+                            <span class="day-separator"></span>
+                        </div>
                         <ul class="agenda-content">
                 `;
-                dayData.shifts.forEach(shift => {
-                    html += `<li>${shift}</li>`;
+                (dayData.shifts || []).forEach(rawShift => {
+                    const s = parseShift(rawShift);
+                    html += `
+                        <li class="shift-row" data-turno="${s.name}" data-op="${s.op}">
+                            <span class="shift-name">${s.name}</span>
+                            <span class="shift-op">${s.op}</span>
+                            <span class="shift-time">${s.time ? '(' + s.time + ')' : ''}</span>
+                        </li>`;
                 });
                 html += `</ul></div>`;
                 container.innerHTML += html;
             });
+        }
+
+        window.svuotaCollection = async function() {
+            if (!confirm('Sei sicuro di voler svuotare tutti i dati dal database?')) return;
+            setStatus('Svuotamento database in corso...');
+            try {
+                const snapshot = await getDocs(collection(db, "turni"));
+                for (const docSnap of snapshot.docs) {
+                    await deleteDoc(doc(db, "turni", docSnap.id));
+                }
+                turniData = [];
+                renderAgenda([]);
+                setStatus('Database svuotato ✅');
+            } catch (error) {
+                console.error("Errore svuotamento:", error);
+                setStatus('Errore nello svuotamento ❌');
+            }
         }
 
         // Carica i dati da Firebase all'apertura della pagina
