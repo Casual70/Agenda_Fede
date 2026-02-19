@@ -95,7 +95,7 @@
         }
 
         .agenda-content li {
-            list-style-type: lower-alpha; /* a), b), c) come nello screen */
+            list-style-type: none;
             margin-bottom: 8px;
             color: var(--text-main);
             font-size: 0.95em;
@@ -136,7 +136,7 @@
 
         <div class="footer-info">
             <span><strong>Mese:</strong> Febbraio 2026</span>
-            <span><strong>Stato:</strong> Sincronizzato con Firebase</span>
+            <span id="status-text"><strong>Stato:</strong> Caricamento in corso...</span>
         </div>
         <div class="deco-lines" style="margin-top: 20px;"></div>
         <div class="deco-lines thin"></div>
@@ -144,11 +144,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        /* * 1. CONFIGURAZIONE FIREBASE 
-         * Sostituisci questi dati con quelli del tuo progetto Firebase!
-         */
         const firebaseConfig = {
             apiKey: "AIzaSyDKchLtVCALojZz8Yd0o_L8L-bW7PsZ9hc",
             authDomain: "agenda-fede.firebaseapp.com",
@@ -158,28 +155,35 @@
             appId: "1:145413232967:web:0d8c98d4f48b3c241a9462"
         };
 
-        // Inizializza Firebase (Commentato per evitare errori finché non metti le tue chiavi vere)
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- DATI SIMULATI (MOCK) ---
-        // Poiché estrarre il PDF lato client è complesso, simuliamo i dati 
-        // che un buon estrattore ricaverebbe dal tuo PDF "TURNI FEBBRAIO 2026"
-        let turniData = [
+        // Dati di esempio (usati solo al primo caricamento PDF)
+        const turniDataMock = [
             { id: 1, day: "1 (FDO)", shifts: ["MATT 1: FED (8:30-14:00)", "MATT 2: SAN (10:00-15:00)", "POM 1: CHIA (15:00-20:00)"] },
             { id: 2, day: "2 (LU)", shifts: ["NOTTE 2: ERME", "CENTR: STE", "POM 1: BAD", "POM 2: PET", "NOTTE 1: SAN"] },
             { id: 3, day: "3 (MA)", shifts: ["NOTTE 2: PET (0:00-9:00)", "MATT 1: ANNA (7:30-14:30)", "CENTR: CAR (19:00-14:00)", "RIUNIONE D'EQUIPE: CHIA"] }
         ];
 
-        // Numeri romani per lo stile Agenda
-        const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+        let turniData = [];
 
-        // Funzione per stampare i dati sulla pagina
+        const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+                               "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+                               "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI"];
+
+        function setStatus(msg) {
+            document.getElementById('status-text').innerHTML = `<strong>Stato:</strong> ${msg}`;
+        }
+
         function renderAgenda(dataToRender) {
             const container = document.getElementById('agenda-content-area');
-            container.innerHTML = ''; // Pulisci area
+            container.innerHTML = '';
+            document.getElementById('agenda-subtitle').innerText = "Mese di competenza: FEBBRAIO 2026";
 
-            document.getElementById('agenda-subtitle').innerText = "Estrazione Dati: Mese di Febbraio 2026";
+            if (dataToRender.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-light); font-style:italic;">Nessun dato trovato. Carica un PDF per iniziare.</p>';
+                return;
+            }
 
             dataToRender.forEach((dayData, index) => {
                 let html = `
@@ -187,56 +191,77 @@
                         <div class="agenda-title">${romanNumerals[index] || index + 1}. GIORNO ${dayData.day}</div>
                         <ul class="agenda-content">
                 `;
-                
                 dayData.shifts.forEach(shift => {
                     html += `<li>${shift}</li>`;
                 });
-
                 html += `</ul></div>`;
                 container.innerHTML += html;
             });
         }
 
-        // Simula il click del bottone "Elabora PDF"
+        // Carica i dati da Firebase all'apertura della pagina
+        async function loadFromFirebase() {
+            setStatus('Caricamento dal database in corso...');
+            try {
+                const snapshot = await getDocs(collection(db, "turni_febbraio_2026"));
+                if (snapshot.empty) {
+                    setStatus('Nessun dato nel database. Carica un PDF.');
+                    renderAgenda([]);
+                    return;
+                }
+                turniData = [];
+                snapshot.forEach(docSnap => {
+                    turniData.push({ _docId: docSnap.id, ...docSnap.data() });
+                });
+                // Ordina per id numerico
+                turniData.sort((a, b) => (a.id || 0) - (b.id || 0));
+                renderAgenda(turniData);
+                setStatus('Sincronizzato con Firebase ✅');
+            } catch (error) {
+                console.error("Errore lettura Firebase:", error);
+                setStatus('Errore di connessione al database ❌');
+            }
+        }
+
         window.processAndUpload = async function() {
             const fileInput = document.getElementById('pdfUpload');
             if (fileInput.files.length === 0) {
                 alert("Seleziona prima un file PDF!");
                 return;
             }
-            
-            alert("Lettura PDF in corso... (Simulazione). Salvataggio su Firebase...");
 
-            /* * ESEMPIO DI CODICE FIREBASE REALE DA USARE IN FUTURO:
-             * * try {
-             * turniData.forEach(async (turno) => {
-             * await addDoc(collection(db, "turni_febbraio"), turno);
-             * });
-             * alert("Dati salvati con successo su Firestore!");
-             * } catch (e) {
-             * console.error("Errore: ", e);
-             * }
-             */
-
-            // Mostriamo i dati a schermo per il prototipo
-            renderAgenda(turniData);
+            setStatus('Salvataggio su Firebase in corso...');
+            try {
+                // Cancella i vecchi documenti prima di salvare i nuovi
+                const existing = await getDocs(collection(db, "turni_febbraio_2026"));
+                for (const docSnap of existing.docs) {
+                    await deleteDoc(doc(db, "turni_febbraio_2026", docSnap.id));
+                }
+                // Salva i nuovi dati (mock - in futuro dal PDF reale)
+                for (const turno of turniDataMock) {
+                    await addDoc(collection(db, "turni_febbraio_2026"), turno);
+                }
+                // Ricarica da Firebase
+                await loadFromFirebase();
+                alert("Dati salvati con successo su Firebase! ✅");
+            } catch (error) {
+                console.error("Errore Firebase:", error);
+                setStatus('Errore nel salvataggio ❌');
+                alert("Errore nel salvataggio. Controlla la console.");
+            }
         }
 
-        // Simula il filtro (Funzionalità "Strada facendo")
         window.applyFilter = function() {
             const query = document.getElementById('filterInput').value.toLowerCase();
-            
             const filteredData = turniData.map(dayInfo => {
-                // Filtra solo i turni (le stringhe) che contengono il nome cercato
                 const filteredShifts = dayInfo.shifts.filter(shift => shift.toLowerCase().includes(query));
                 return { ...dayInfo, shifts: filteredShifts };
-            }).filter(dayInfo => dayInfo.shifts.length > 0); // Mostra solo i giorni in cui l'operatore lavora
-
+            }).filter(dayInfo => dayInfo.shifts.length > 0);
             renderAgenda(filteredData);
         }
 
-        // Disegna una prima volta l'interfaccia vuota o con dati di test
-        // renderAgenda(turniData); // Rimuovi il commento se vuoi vederli subito all'apertura
+        // Carica i dati all'apertura
+        loadFromFirebase();
     </script>
 </body>
 </html>
