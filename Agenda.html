@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Turni - Febbraio 2026</title>
+    <style>
+        :root {
+            --primary-color: #5F9EA0; 
+            --text-main: #333333;
+            --text-light: #666666;
+            --bg-page: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .document-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            padding: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .deco-lines { height: 12px; background-color: #d1e0e0; margin-bottom: 8px; width: 100%; }
+        .deco-lines.thin { height: 6px; }
+
+        h1 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 2.2em;
+            letter-spacing: 2px;
+            margin-top: 30px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle { color: var(--text-light); font-size: 0.9em; margin-bottom: 40px; }
+
+        .controls-section {
+            background-color: #f9fbfb;
+            border: 1px dashed var(--primary-color);
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+        }
+
+        .controls-section button {
+            background-color: var(--primary-color); color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 3px; font-weight: bold;
+        }
+        .controls-section button:hover { background-color: #4f8587; }
+
+        .agenda-item { margin-bottom: 35px; }
+
+        .agenda-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .agenda-content { margin-left: 25px; line-height: 1.8; padding-left: 0; }
+        
+        .agenda-content li {
+            list-style-type: none; 
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 0.95em;
+            display: flex;
+        }
+
+        .shift-name { width: 100px; font-weight: bold; color: var(--primary-color); }
+        .shift-op { width: 60px; font-weight: bold; }
+        .shift-time { color: var(--text-light); }
+
+        .footer-info { margin-top: 60px; display: flex; flex-direction: column; align-items: flex-end; font-size: 0.85em; color: var(--text-light); }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+        <div class="deco-lines"></div>
+        <div class="deco-lines thin"></div>
+
+        <h1>AGENDA TURNI</h1>
+        <div class="subtitle" id="agenda-subtitle">Mese di competenza: FEBBRAIO 2026</div>
+
+        <div class="controls-section">
+            <h3 style="margin-top:0; color:var(--primary-color); font-size:1em;">Caricamento Dati (Simulato)</h3>
+            <input type="file" id="pdfUpload" accept=".pdf">
+            <button onclick="processAndUpload()">Elabora PDF e Salva su Firebase</button>
+            <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
+            <input type="text" id="filterInput" placeholder="Es. Filtra per Operatore (CAR)..." style="padding:5px; width:250px;">
+            <button onclick="applyFilter()" style="background-color: #666;">Filtra</button>
+        </div>
+
+        <div id="agenda-content-area"></div>
+
+        <div class="footer-info">
+            <span><strong>Mese:</strong> Febbraio 2026</span>
+            <span id="status-text"><strong>Stato:</strong> In attesa di caricamento</span>
+        </div>
+        <div class="deco-lines" style="margin-top: 20px;"></div>
+        <div class="deco-lines thin"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // LE TUE CHIAVI FIREBASE REALI
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKchLtVCALojZz8Yd0o_L8L-bW7PsZ9hc",
+            authDomain: "agenda-fede.firebaseapp.com",
+            projectId: "agenda-fede",
+            storageBucket: "agenda-fede.firebasestorage.app",
+            messagingSenderId: "145413232967",
+            appId: "1:145413232967:web:0d8c98d4f48b3c241a9462"
+        };
+
+        // INIZIALIZZAZIONE FIREBASE ATTIVATA
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // I DATI ESTRATTI (Simulazione delle prime due righe del tuo PDF)
+        let turniData = [
+            { 
+                id: 1, 
+                dateDay: "DO 1", 
+                fullDate: "Domenica 1 Febbraio 2026",
+                shifts: [
+                    { name: "NOTTE 2", op: "CAR", time: "0:00 - 9:00" },
+                    { name: "MATT 1", op: "FED", time: "8:30 - 14:00" },
+                    { name: "MATT 2", op: "SAN", time: "10:00 - 15:00" },
+                    { name: "POM 1", op: "EMA", time: "15:00 - 20:00" },
+                    { name: "POM 2", op: "PET", time: "16:00 - 21:00" },
+                    { name: "NOTTE 1", op: "CHIA", time: "20:00 - 24:00" }
+                ] 
+            },
+            { 
+                id: 2, 
+                dateDay: "LU 2", 
+                fullDate: "Lunedì 2 Febbraio 2026",
+                shifts: [
+                    { name: "NOTTE 2", op: "CHIA", time: "0:00 - 9:00" },
+                    { name: "MATT 1", op: "ERME", time: "7:30 - 14:30" },
+                    { name: "CENTR.", op: "STE", time: "14:00 - 19:00" },
+                    { name: "POM 1", op: "SAN", time: "15:00 - 21:00" },
+                    { name: "POM 2", op: "BAD", time: "15:30 - 22:30" },
+                    { name: "NOTTE 1", op: "PET", time: "22:00 - 24:00" }
+                ] 
+            }
+        ];
+
+        function renderAgenda(dataToRender) {
+            const container = document.getElementById('agenda-content-area');
+            container.innerHTML = ''; 
+
+            dataToRender.forEach((dayData) => {
+                let html = `
+                    <div class="agenda-item">
+                        <div class="agenda-title">${dayData.dateDay} - ${dayData.fullDate.toUpperCase()}</div>
+                        <ul class="agenda-content">
+                `;
+                
+                dayData.shifts.forEach(shift => {
+                    html += `
+                        <li>
+                            <span class="shift-name">${shift.name}</span>
+                            <span class="shift-op">${shift.op}</span>
+                            <span class="shift-time">(${shift.time})</span>
+                        </li>
+                    `;
+                });
+
+                html += `</ul></div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        window.processAndUpload = async function() {
+            const fileInput = document.getElementById('pdfUpload');
+            if (fileInput.files.length === 0) {
+                alert("Seleziona prima il PDF!");
+                return;
+            }
+
+            document.getElementById('status-text').innerHTML = "<strong>Stato:</strong> Salvataggio su Firebase in corso...";
+
+            // LOGICA REALE DI SALVATAGGIO SU FIREBASE
+            try {
+                // Cicliamo i giorni e li salviamo in una "cartella" (collection) chiamata turni_febbraio_2026
+                for (const turno of turniData) {
+                    await addDoc(collection(db, "turni_febbraio_2026"), turno);
+                }
+                
+                document.getElementById('status-text').innerHTML = "<strong>Stato:</strong> Sincronizzato con Firebase ✅";
+                alert("Dati salvati con successo sul tuo database 'agenda-fede'!");
+                
+                // Mostriamo l'agenda a schermo solo se il salvataggio è andato a buon fine
+                renderAgenda(turniData);
+
+            } catch (error) {
+                console.error("Errore Firebase: ", error);
+                alert("Si è verificato un errore nel salvataggio. Controlla la console.");
+                document.getElementById('status-text').innerHTML = "<strong>Stato:</strong> Errore di sincronizzazione ❌";
+            }
+        }
+
+        window.applyFilter = function() {
+            const query = document.getElementById('filterInput').value.toUpperCase();
+            const filteredData = turniData.map(dayInfo => {
+                const filteredShifts = dayInfo.shifts.filter(shift => shift.op.toUpperCase().includes(query));
+                return { ...dayInfo, shifts: filteredShifts };
+            }).filter(dayInfo => dayInfo.shifts.length > 0); 
+            renderAgenda(filteredData);
+        }
+    </script>
+</body>
+</html>
