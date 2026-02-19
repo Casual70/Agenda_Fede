@@ -203,7 +203,7 @@
         async function loadFromFirebase() {
             setStatus('Caricamento dal database in corso...');
             try {
-                const snapshot = await getDocs(collection(db, "turni_febbraio_2026"));
+                const snapshot = await getDocs(collection(db, "turni"));
                 if (snapshot.empty) {
                     setStatus('Nessun dato nel database. Carica un PDF.');
                     renderAgenda([]);
@@ -233,13 +233,13 @@
             setStatus('Salvataggio su Firebase in corso...');
             try {
                 // Cancella i vecchi documenti prima di salvare i nuovi
-                const existing = await getDocs(collection(db, "turni_febbraio_2026"));
+                const existing = await getDocs(collection(db, "turni"));
                 for (const docSnap of existing.docs) {
-                    await deleteDoc(doc(db, "turni_febbraio_2026", docSnap.id));
+                    await deleteDoc(doc(db, "turni", docSnap.id));
                 }
                 // Salva i nuovi dati (mock - in futuro dal PDF reale)
                 for (const turno of turniDataMock) {
-                    await addDoc(collection(db, "turni_febbraio_2026"), turno);
+                    await addDoc(collection(db, "turni"), turno);
                 }
                 // Ricarica da Firebase
                 await loadFromFirebase();
