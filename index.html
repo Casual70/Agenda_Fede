@@ -152,16 +152,16 @@
 
         /* Tasto modifica turno */
         .btn-modifica {
-            margin-left: auto;
             background: none;
             border: 1px solid #c5dada;
             border-radius: 3px;
             color: var(--primary-color);
-            font-size: 0.75em;
-            padding: 2px 7px;
+            font-size: 0.78em;
+            padding: 2px 8px;
             cursor: pointer;
             white-space: nowrap;
             transition: background 0.15s;
+            flex-shrink: 0;
         }
         .btn-modifica:hover { background: #e8f4f4; }
         .btn-modifica.salva {
@@ -1489,17 +1489,17 @@
                             <span class="day-separator"></span>
                             <span class="day-label">${label}</span>
                             <span class="day-separator"></span>
+                            <button class="btn-modifica" onclick="toggleModificaGiorno(this)">✏ modifica</button>
                         </div>
                         <ul class="agenda-content">
                 `;
                 (dayData.shifts || []).forEach((rawShift, idx) => {
                     const s = parseShift(rawShift);
                     html += `
-                        <li class="shift-row" data-dayid="${dayData.id}" data-shiftidx="${idx}" data-turno="${s.name}" data-op="${s.op}">
+                        <li class="shift-row" data-shiftidx="${idx}" data-turno="${s.name}" data-op="${s.op}">
                             <span class="shift-name">${s.name}</span>
                             <span class="shift-op-display">${s.op}</span>
                             <span class="shift-time">${s.time ? '(' + s.time + ')' : ''}</span>
-                            <button class="btn-modifica" onclick="toggleModifica(this)">✏ modifica</button>
                         </li>`;
                 });
                 html += `</ul></div>`;
@@ -1519,68 +1519,75 @@
             return [...ops].sort();
         }
 
-        window.toggleModifica = async function(btn) {
-            const li = btn.closest('li.shift-row');
-            const opDisplay = li.querySelector('.shift-op-display');
+        window.toggleModificaGiorno = async function(btn) {
+            const agendaItem = btn.closest('.agenda-item');
+            const dayId = parseInt(agendaItem.dataset.dayid);
+            const righe = agendaItem.querySelectorAll('li.shift-row');
+            const ops = getOperatoriKnown();
 
             if (btn.classList.contains('salva')) {
-                // — SALVA —
-                const sel = li.querySelector('.select-op-edit');
-                const nuovoOp = sel.value;
-                const dayId   = parseInt(li.dataset.dayid);
-                const shiftIdx = parseInt(li.dataset.shiftidx);
-
-                // Aggiorna turniData in memoria
+                // ── SALVA tutti gli operatori del giorno ──
                 const dayObj = turniData.find(d => d.id === dayId);
-                if (dayObj) {
-                    const s = parseShift(dayObj.shifts[shiftIdx]);
-                    s.op = nuovoOp;
-                    dayObj.shifts[shiftIdx] = s;
-                    li.dataset.op = nuovoOp;
-                }
 
-                // Ripristina visualizzazione testo
-                sel.replaceWith((() => { const sp = document.createElement('span'); sp.className = 'shift-op-display'; sp.textContent = nuovoOp; return sp; })());
+                righe.forEach(li => {
+                    const idx = parseInt(li.dataset.shiftidx);
+                    const sel = li.querySelector('.select-op-edit');
+                    if (!sel) return;
+                    const nuovoOp = sel.value;
+
+                    // Aggiorna in memoria
+                    if (dayObj) {
+                        const s = parseShift(dayObj.shifts[idx]);
+                        s.op = nuovoOp;
+                        dayObj.shifts[idx] = s;
+                    }
+
+                    // Ripristina testo
+                    const sp = document.createElement('span');
+                    sp.className = 'shift-op-display';
+                    sp.textContent = nuovoOp;
+                    sel.replaceWith(sp);
+                });
+
                 btn.classList.remove('salva');
                 btn.textContent = '✏ modifica';
 
                 // Salva su Firebase
-                setStatus('Salvataggio modifica...');
+                setStatus('Salvataggio giorno in corso...');
                 try {
-                    // Trova il doc Firebase corrispondente e aggiornalo
                     const snap = await getDocs(collection(db, 'turni'));
                     for (const docSnap of snap.docs) {
-                        const d = docSnap.data();
-                        if (d.id === dayId) {
+                        if (docSnap.data().id === dayId) {
                             const dayObj2 = turniData.find(x => x.id === dayId);
                             await updateDoc(doc(db, 'turni', docSnap.id), { shifts: dayObj2.shifts });
                             break;
                         }
                     }
-                    setStatus(`✅ Turno aggiornato: ${li.querySelector('.shift-name').textContent} → ${nuovoOp}`);
+                    setStatus(`✅ Giorno aggiornato (id ${dayId})`);
                     populateOperatorSelect();
                 } catch(e) {
                     console.error(e);
-                    setStatus('❌ Errore nel salvataggio della modifica.');
+                    setStatus('❌ Errore nel salvataggio.');
                 }
 
             } else {
-                // — MODIFICA —
-                const currentOp = opDisplay.textContent.trim();
-                const ops = getOperatoriKnown();
+                // ── MODIFICA: trasforma tutti gli operatori in select ──
+                righe.forEach(li => {
+                    const opDisplay = li.querySelector('.shift-op-display');
+                    if (!opDisplay) return;
+                    const currentOp = opDisplay.textContent.trim().toUpperCase();
 
-                // Crea select con tutti gli operatori
-                const sel = document.createElement('select');
-                sel.className = 'select-op-edit';
-                ops.forEach(op => {
-                    const opt = document.createElement('option');
-                    opt.value = op;
-                    opt.textContent = op;
-                    if (op === currentOp.toUpperCase()) opt.selected = true;
-                    sel.appendChild(opt);
+                    const sel = document.createElement('select');
+                    sel.className = 'select-op-edit';
+                    ops.forEach(op => {
+                        const opt = document.createElement('option');
+                        opt.value = op;
+                        opt.textContent = op;
+                        if (op === currentOp) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                    opDisplay.replaceWith(sel);
                 });
-                opDisplay.replaceWith(sel);
-                sel.focus();
 
                 btn.classList.add('salva');
                 btn.textContent = '💾 salva';
