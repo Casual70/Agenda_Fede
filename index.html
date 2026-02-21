@@ -242,7 +242,6 @@
         }
         .gantt-bar {
             position: absolute;
-            left: 24px; right: 3px;
             border-radius: 3px;
             display: flex;
             align-items: center;
@@ -258,7 +257,7 @@
         @media (max-width: 600px) {
             .gantt-day { width: 66px; }
             .gantt-timeline { height: 168px; }
-            .gantt-bar { font-size: 0.5em; left: 20px; }
+            .gantt-bar { font-size: 0.5em; }
             .gantt-tick { font-size: 0.52em; width: 17px; }
             .gantt-tick-line { left: 20px; }
         }
@@ -1545,24 +1544,59 @@
                 'POM 1':   '#5f9ea0', 'POM 2':   '#8b72be',
                 'NOTTE 1': '#1a2f5e'
             };
+            // Area orizontale: 27.3% tick label, 69.3% barre, 1.2% gap tra lane
+            const TICK_L = 27.3;
+            const BAR_W  = 69.3;
+            const GAP    = 1.2;
+
+            // 1. Parsing
+            const bars = [];
+            (dayData.shifts || []).forEach(rawShift => {
+                const s = parseShift(rawShift);
+                const m = s.time ? s.time.match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/) : null;
+                if (!m) return;
+                let startMin = parseInt(m[1]) * 60 + parseInt(m[2]);
+                let endMin   = parseInt(m[3]) * 60 + parseInt(m[4]);
+                if (endMin === 0) endMin = 1440;
+                bars.push({ startMin, endMin, name: s.name, op: s.op, time: s.time,
+                            color: COLORS[s.name] || '#5f9ea0' });
+            });
+            bars.sort((a, b) => a.startMin - b.startMin);
+
+            // 2. Assegna lane con greedy algorithm
+            const laneEnds = [];
+            bars.forEach(bar => {
+                let lane = laneEnds.findIndex(end => end <= bar.startMin);
+                if (lane === -1) { lane = laneEnds.length; laneEnds.push(0); }
+                laneEnds[lane] = bar.endMin;
+                bar.lane = lane;
+            });
+
+            // 3. Calcola quante lane sono attive nello stesso intervallo per ogni barra
+            bars.forEach(bar => {
+                const concurrent = bars.filter(b => b.startMin < bar.endMin && b.endMin > bar.startMin);
+                bar.totalLanes = Math.max(...concurrent.map(b => b.lane)) + 1;
+            });
+
+            // 4. Tick
             const ticksHtml = TICKS.map(h => {
                 const pct = (h * 60 / TOTAL * 100).toFixed(2);
                 return `<div class="gantt-tick-line" style="top:${pct}%"></div>
                         <div class="gantt-tick" style="top:${pct}%">${h}</div>`;
             }).join('');
-            const barsHtml = (dayData.shifts || []).map(rawShift => {
-                const s = parseShift(rawShift);
-                const m = s.time ? s.time.match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/) : null;
-                if (!m) return '';
-                let startMin = parseInt(m[1]) * 60 + parseInt(m[2]);
-                let endMin   = parseInt(m[3]) * 60 + parseInt(m[4]);
-                if (endMin === 0) endMin = 1440;
-                const top    = (startMin / TOTAL * 100).toFixed(2);
-                const height = ((endMin - startMin) / TOTAL * 100).toFixed(2);
-                const color  = COLORS[s.name] || '#5f9ea0';
-                const lbl    = parseFloat(height) > 5 ? s.op : '';
-                return `<div class="gantt-bar" style="top:${top}%;height:${height}%;background:${color}" title="${s.name} — ${s.op} (${s.time})">${lbl}</div>`;
+
+            // 5. Barre affiancate per le sovrapposizioni
+            const barsHtml = bars.map(bar => {
+                const top    = (bar.startMin / TOTAL * 100).toFixed(2);
+                const height = ((bar.endMin - bar.startMin) / TOTAL * 100).toFixed(2);
+                const laneW  = (BAR_W - GAP * (bar.totalLanes - 1)) / bar.totalLanes;
+                const left   = (TICK_L + bar.lane * (laneW + GAP)).toFixed(2);
+                const lbl    = parseFloat(height) > 4 ? bar.op : '';
+                return `<div class="gantt-bar"
+                            style="top:${top}%;height:${height}%;left:${left}%;width:${laneW.toFixed(2)}%;background:${bar.color}"
+                            title="${bar.name} \u2014 ${bar.op} (${bar.time})">${lbl}</div>`;
             }).join('');
+
             return `<div class="gantt-day">
                         <div class="gantt-label">orari</div>
                         <div class="gantt-timeline">${ticksHtml}${barsHtml}</div>
