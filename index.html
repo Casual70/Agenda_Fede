@@ -1319,7 +1319,7 @@
         // Controlla se il server locale è attivo
         async function checkServer() {
             try {
-                const r = await fetch('http://localhost:5000/api/status', { signal: AbortSignal.timeout(800) });
+                const r = await fetch('http://localhost:8080/api/status', { signal: AbortSignal.timeout(800) });
                 if (r.ok) {
                     document.getElementById('server-hint').innerHTML =
                         '🟢 Server locale attivo — puoi importare il PDF.';
@@ -1337,7 +1337,7 @@
             if (!pdfName) { alert('Inserisci il nome del file PDF.'); return; }
             setStatus('Elaborazione PDF in corso...');
             try {
-                const res = await fetch('http://localhost:5000/api/parse', {
+                const res = await fetch('http://localhost:8080/api/parse', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ pdfName })

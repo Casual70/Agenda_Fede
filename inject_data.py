@@ -15,13 +15,13 @@ with open('index.html', encoding='utf-8') as f:
 pattern = r'// Dati.*?(?=\n\n        let turniData)'
 replacement = f'// Dati aggiornati ({len(data)} giorni) — generati automaticamente da parse_turni.py\n        const turniDataMock = {json_str};'
 
-new_html = re.sub(pattern, replacement, html, flags=re.DOTALL)
-
-if new_html == html:
+if not re.search(pattern, html, re.DOTALL):
     print("ERRORE: pattern non trovato in index.html.")
     sys.exit(1)
-else:
-    with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(new_html)
-    print(f"index.html aggiornato con {len(data)} giorni.")
+
+new_html = re.sub(pattern, replacement, html, flags=re.DOTALL)
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(new_html)
+print(f"index.html aggiornato con {len(data)} giorni.")
 

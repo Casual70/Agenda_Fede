@@ -38,14 +38,20 @@ def parse():
         [PYTHON, os.path.join(BASE, 'parse_turni.py'), pdf_name],
         capture_output=True, text=True, cwd=BASE
     )
+    print("=== PARSER STDOUT ===")
+    print(r1.stdout)
+    print("=== PARSER STDERR ===")
+    print(r1.stderr)
     if r1.returncode != 0:
         return jsonify({'error': 'Errore nel parser', 'details': r1.stderr}), 500
 
-    # Ricava il nome del JSON dall'output del parser
+    # Ricava il nome del JSON dall'output del parser (es. "Salvato in turni_febbraio_2026.json (28 giorni)")
     json_file = None
     for line in r1.stdout.splitlines():
         if 'Salvato in' in line:
-            json_file = line.split('Salvato in')[-1].strip()
+            # Prende solo la parte fino al primo spazio dopo il .json
+            part = line.split('Salvato in')[-1].strip()
+            json_file = part.split(' ')[0]   # es. "turni_febbraio_2026.json"
             break
 
     if not json_file:
@@ -74,6 +80,6 @@ def parse():
 if __name__ == '__main__':
     print("=" * 50)
     print("  Server Agenda Turni avviato!")
-    print("  Apri: http://localhost:5000")
+    print("  Apri: http://localhost:8080")
     print("=" * 50)
-    app.run(host='127.0.0.1', port=5000, debug=False)
+    app.run(host='127.0.0.1', port=8080, debug=False)
