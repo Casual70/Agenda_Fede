@@ -2,78 +2,150 @@
   AGENDA TURNI - COME AGGIUNGERE UN NUOVO MESE
 ====================================================
 
-REQUISITI
----------
-- Python 3 installato
-- Librerie: pdfplumber, flask, flask-cors (già installate)
-- Git configurato
-
-METODO A - DAL BROWSER (CONSIGLIATO)
+NOTA TECNICA - DUE PYTHON INSTALLATI
 --------------------------------------
+Sul PC sono presenti due versioni di Python:
+  - python (nel PATH) → C:\laragon\bin\python\python-3.10\python.exe
+                         Usato da "python server.py" — Flask e pdfplumber OK
 
-1. COPIA IL PDF DEL NUOVO MESE
-   Metti il PDF nella cartella:
-   C:\Users\casua\Agenda_Fede\Agenda_Fede\
+  - Python 3.13       → C:\Users\casua\AppData\Local\Programs\Python\Python313\python.exe
+                         NON usare per il server (Flask/pdfplumber non garantiti)
 
-2. AVVIA IL SERVER LOCALE
-   Apri una finestra CMD o PowerShell e lancia:
+Usa sempre semplicemente "python" nel terminale per avviare il server.
 
-     cd C:\Users\casua\Agenda_Fede\Agenda_Fede
-     C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe server.py
-
-   Lascia questa finestra aperta (il server gira su http://localhost:8080)
-
-3. APRI IL BROWSER
-   Vai su:  http://localhost:8080
-
-4. USA L'INTERFACCIA
-   - Nel campo "Nome PDF" scrivi il nome del file PDF (es. 2603_ TURNI MARZO 2026 - ORARIO.pdf)
-   - Clicca ⚙ "Elabora PDF" → i dati appaiono a schermo
-   - Clicca 💾 "Salva su Firebase" → i dati vengono salvati nel database
-
-5. PUBBLICA SU GITHUB
-   Dopo aver verificato i dati, dal terminale:
-
-     git add index.html
-     git commit -m "Aggiungi turni marzo 2026"
-     git push
-
-   Il sito GitHub Pages si aggiornerà in automatico.
-
-
-METODO B - DA TERMINALE (ALTERNATIVO)
---------------------------------------
-
-1. COPIA IL PDF nella cartella del progetto
-
-2. ESEGUI IL PARSER
-   C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe parse_turni.py "2603_ TURNI MARZO 2026 - ORARIO.pdf"
-
-3. INIETTA I DATI IN index.html
-   C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe inject_data.py turni_marzo_2026.json
-
-4. PUBBLICA SU GITHUB
-   git add index.html && git commit -m "Turni marzo 2026" && git push
-
-6. AGGIORNA ANCHE IL TITOLO IN index.html (opzionale)
-   Cerca la riga:
-
-     document.getElementById('agenda-subtitle').innerText = "Mese di competenza: FEBBRAIO 2026";
-
-   E cambia mese e anno.
-
-7. SALVA SU GITHUB
-   Dal terminale:
-
-     git add index.html turni_MESE_ANNO.json
-     git commit -m "Aggiornamento turni MESE ANNO"
-     git push
-
-   Il sito si aggiornerà automaticamente entro pochi minuti.
 
 ====================================================
-  DOPO IL PUSH ricorda di svuotare il DB Firebase
-  usando il bottone "Svuota DB" nella pagina,
-  poi ricaricare il PDF con "Elabora PDF e Salva"
-  per aggiornare anche Firestore.
+  PROCEDURA COMPLETA PER UN NUOVO MESE
 ====================================================
+
+PASSO 1 — COPIA IL PDF
+-----------------------
+Copia il PDF del nuovo mese nella cartella del progetto:
+
+  C:\Users\casua\Agenda_Fede\Agenda_Fede\
+
+Esempio nome file: 2603_ TURNI MARZO 2026 - ORARIO.pdf
+
+
+PASSO 2 — AVVIA IL SERVER LOCALE
+----------------------------------
+Apri PowerShell o CMD e lancia:
+
+  cd C:\Users\casua\Agenda_Fede\Agenda_Fede
+  python server.py
+
+Vedrai:
+  ==================================================
+    Server Agenda Turni avviato!
+    Apri: http://localhost:8080
+  ==================================================
+
+⚠️  Lascia questa finestra APERTA per tutta la durata del lavoro.
+    Se la chiudi, il server si ferma e il browser non funziona.
+
+
+PASSO 3 — APRI IL BROWSER
+---------------------------
+Vai su:  http://localhost:8080
+
+Nella sezione "Importazione PDF" vedrai:
+  🟢 Server locale attivo — puoi importare il PDF.
+
+Se vedi 🔴, il server non è avviato → torna al Passo 2.
+
+
+PASSO 4 — ELABORA IL PDF
+--------------------------
+  1. Nel campo di testo scrivi il nome esatto del PDF:
+       es.  2603_ TURNI MARZO 2026 - ORARIO.pdf
+
+  2. Clicca  ⚙ Elabora PDF
+     → Il server legge il PDF, estrae i turni e aggiorna index.html
+     → I dati appaiono subito a schermo
+
+  3. Verifica che tutti i giorni del mese siano presenti e corretti.
+
+
+PASSO 5 — SALVA SU FIREBASE
+-----------------------------
+  1. Clicca  🗑 Svuota DB  (per cancellare i dati del mese precedente)
+     → Conferma nel popup
+
+  2. Clicca  💾 Salva su Firebase
+     → I dati vengono scritti su Firestore e saranno visibili
+       anche dal sito pubblico su GitHub Pages.
+
+
+PASSO 6 — AGGIORNA IL TITOLO (opzionale)
+------------------------------------------
+Se vuoi aggiornare l'intestazione "Mese di competenza: FEBBRAIO 2026":
+
+  Apri index.html e cerca questa riga (circa riga 10):
+
+    <p id="agenda-subtitle">Mese di competenza: FEBBRAIO 2026</p>
+
+  Cambia il testo con il mese corretto, es.:
+
+    <p id="agenda-subtitle">Mese di competenza: MARZO 2026</p>
+
+
+PASSO 7 — PUBBLICA SU GITHUB
+------------------------------
+Dal terminale (con il server ancora aperto oppure in un secondo terminale):
+
+  git add index.html
+  git commit -m "Turni marzo 2026"
+  git push
+
+Il sito GitHub Pages si aggiorna entro 1-2 minuti.
+Link: https://casual70.github.io/Agenda_Fede/
+
+
+====================================================
+  METODO ALTERNATIVO — SOLO DA TERMINALE
+  (senza usare il browser, per utenti avanzati)
+====================================================
+
+1. Copia il PDF nella cartella del progetto
+
+2. Esegui il parser:
+     python parse_turni.py "2603_ TURNI MARZO 2026 - ORARIO.pdf"
+   → Genera il file:  turni_marzo_2026.json
+
+3. Inietta i dati in index.html:
+     python inject_data.py turni_marzo_2026.json
+   → Aggiorna index.html con i nuovi dati
+
+4. Pubblica su GitHub:
+     git add index.html turni_marzo_2026.json
+     git commit -m "Turni marzo 2026"
+     git push
+
+5. Apri il sito e usa il bottone 💾 Salva su Firebase
+   per aggiornare anche il database online.
+
+
+====================================================
+  RISOLUZIONE PROBLEMI COMUNI
+====================================================
+
+ERRORE: "No module named 'flask'"
+  → Stai usando il Python sbagliato.
+  → Usa sempre:  python server.py  (non python3, non py)
+
+ERRORE: "No module named 'pdfplumber'"
+  → Reinstalla pdfplumber:
+    python -m pip install pdfplumber
+
+ERRORE 500 da /api/parse nel browser
+  → Controlla che il nome del PDF sia scritto ESATTAMENTE
+    come il file (maiuscole, spazi, underscore)
+  → Controlla che il PDF sia nella cartella del progetto
+
+ERRORE: "Connection refused" nel browser (🔴)
+  → Il server non è avviato. Apri un terminale e lancia:
+    python server.py
+
+IL SITO GITHUB NON SI AGGIORNA
+  → Aspetta 1-2 minuti dopo il push
+  → Controlla su: https://github.com/Casual70/Agenda_Fede/actions
