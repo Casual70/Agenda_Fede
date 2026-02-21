@@ -1,0 +1,80 @@
+====================================================
+  AGENDA TURNI - COME AGGIUNGERE UN NUOVO MESE
+====================================================
+
+REQUISITI
+---------
+- Python 3 installato
+- Libreria pdfplumber (già installata)
+- Git configurato
+
+PASSAGGI
+--------
+
+1. COPIA IL PDF DEL NUOVO MESE
+   Metti il PDF nella cartella:
+   C:\Users\casua\Agenda_Fede\Agenda_Fede\
+
+2. MODIFICA parse_turni.py
+   Apri il file parse_turni.py e cambia questa riga:
+
+     pdfplumber.open('2602_ TURNI FEBBRAIO 2026 - ORARIO.pdf')
+
+   Con il nome del nuovo PDF, es. per marzo:
+
+     pdfplumber.open('2603_ TURNI MARZO 2026 - ORARIO.pdf')
+
+   Cambia anche il mese nella riga successiva:
+
+     if w['text'] == 'Febbraio': mese_num = 2
+
+   Es. per marzo:
+
+     if w['text'] == 'Marzo': mese_num = 3
+
+3. ESEGUI IL PARSER
+   Apri il terminale nella cartella del progetto e lancia:
+
+     C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe parse_turni.py
+
+   Verifica nell'output che vengano trovati tutti i giorni del mese
+   e che gli operatori siano corretti.
+
+4. MODIFICA inject_data.py
+   Apri inject_data.py e aggiorna il nome del file JSON generato:
+
+     with open('turni_febbraio_2026.json', ...) 
+
+   Es. per marzo:
+
+     with open('turni_marzo_2026.json', ...)
+
+5. ESEGUI L'INIEZIONE IN index.html
+   Dal terminale:
+
+     C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe inject_data.py
+
+   Il file index.html verrà aggiornato automaticamente con i nuovi dati.
+
+6. AGGIORNA ANCHE IL TITOLO IN index.html (opzionale)
+   Cerca la riga:
+
+     document.getElementById('agenda-subtitle').innerText = "Mese di competenza: FEBBRAIO 2026";
+
+   E cambia mese e anno.
+
+7. SALVA SU GITHUB
+   Dal terminale:
+
+     git add index.html turni_MESE_ANNO.json
+     git commit -m "Aggiornamento turni MESE ANNO"
+     git push
+
+   Il sito si aggiornerà automaticamente entro pochi minuti.
+
+====================================================
+  DOPO IL PUSH ricorda di svuotare il DB Firebase
+  usando il bottone "Svuota DB" nella pagina,
+  poi ricaricare il PDF con "Elabora PDF e Salva"
+  per aggiornare anche Firestore.
+====================================================
