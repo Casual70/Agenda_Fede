@@ -197,6 +197,72 @@
         }
         .agenda-item.tomorrow .day-label { color: #e65100; }
 
+        /* Layout lista + gantt */
+        .agenda-body {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .agenda-body .agenda-content { flex: 1; }
+
+        /* Gantt verticale */
+        .gantt-day { flex-shrink: 0; width: 88px; }
+        .gantt-label {
+            font-size: 0.65em;
+            color: var(--text-light);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+        .gantt-timeline {
+            position: relative;
+            height: 216px;
+            background: #f8fbfb;
+            border: 1px solid #ddeaea;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .gantt-tick-line {
+            position: absolute;
+            left: 22px; right: 0;
+            height: 1px;
+            background: #e4eeee;
+            pointer-events: none;
+        }
+        .gantt-tick {
+            position: absolute;
+            left: 1px; width: 19px;
+            font-size: 0.57em;
+            color: #bbb;
+            text-align: right;
+            transform: translateY(-50%);
+            line-height: 1;
+            pointer-events: none;
+        }
+        .gantt-bar {
+            position: absolute;
+            left: 24px; right: 3px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.58em;
+            font-weight: bold;
+            color: rgba(255,255,255,0.93);
+            overflow: hidden;
+            cursor: default;
+            min-height: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 600px) {
+            .gantt-day { width: 66px; }
+            .gantt-timeline { height: 168px; }
+            .gantt-bar { font-size: 0.5em; left: 20px; }
+            .gantt-tick { font-size: 0.52em; width: 17px; }
+            .gantt-tick-line { left: 20px; }
+        }
+
         /* Pannello impostazioni collassabile */
         .settings-toggle {
             background: none;
@@ -1470,6 +1536,39 @@
             btn.textContent = panel.classList.contains('open') ? '⚙ Impostazioni ▴' : '⚙ Impostazioni ▾';
         }
 
+        function buildGantt(dayData) {
+            const TOTAL = 1440;
+            const TICKS = [0, 4, 8, 12, 16, 20, 24];
+            const COLORS = {
+                'NOTTE 2': '#2c4b8a', 'MATT 1':  '#e8921a',
+                'MATT 2':  '#f5b731', 'CENTR.':  '#4caf7d',
+                'POM 1':   '#5f9ea0', 'POM 2':   '#8b72be',
+                'NOTTE 1': '#1a2f5e'
+            };
+            const ticksHtml = TICKS.map(h => {
+                const pct = (h * 60 / TOTAL * 100).toFixed(2);
+                return `<div class="gantt-tick-line" style="top:${pct}%"></div>
+                        <div class="gantt-tick" style="top:${pct}%">${h}</div>`;
+            }).join('');
+            const barsHtml = (dayData.shifts || []).map(rawShift => {
+                const s = parseShift(rawShift);
+                const m = s.time ? s.time.match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/) : null;
+                if (!m) return '';
+                let startMin = parseInt(m[1]) * 60 + parseInt(m[2]);
+                let endMin   = parseInt(m[3]) * 60 + parseInt(m[4]);
+                if (endMin === 0) endMin = 1440;
+                const top    = (startMin / TOTAL * 100).toFixed(2);
+                const height = ((endMin - startMin) / TOTAL * 100).toFixed(2);
+                const color  = COLORS[s.name] || '#5f9ea0';
+                const lbl    = parseFloat(height) > 5 ? s.op : '';
+                return `<div class="gantt-bar" style="top:${top}%;height:${height}%;background:${color}" title="${s.name} — ${s.op} (${s.time})">${lbl}</div>`;
+            }).join('');
+            return `<div class="gantt-day">
+                        <div class="gantt-label">orari</div>
+                        <div class="gantt-timeline">${ticksHtml}${barsHtml}</div>
+                    </div>`;
+        }
+
         function renderAgenda(dataToRender) {
             const container = document.getElementById('agenda-content-area');
             container.innerHTML = '';
@@ -1491,6 +1590,7 @@
                             <span class="day-separator"></span>
                             <button class="btn-modifica" onclick="toggleModificaGiorno(this)">✏ modifica</button>
                         </div>
+                        <div class="agenda-body">
                         <ul class="agenda-content">
                 `;
                 (dayData.shifts || []).forEach((rawShift, idx) => {
@@ -1502,7 +1602,7 @@
                             <span class="shift-time">${s.time ? '(' + s.time + ')' : ''}</span>
                         </li>`;
                 });
-                html += `</ul></div>`;
+                html += `</ul>${buildGantt(dayData)}</div></div>`;
                 container.innerHTML += html;
             });
         }
