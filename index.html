@@ -239,6 +239,50 @@
             }
         }
 
+        /* Box riepilogo ore operatore */
+        #ore-riepilogo {
+            display: none;
+            background: #f0f7f7;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin-top: 30px;
+            font-size: 0.93em;
+        }
+        #ore-riepilogo h4 {
+            margin: 0 0 12px;
+            color: var(--primary-color);
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .ore-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+        }
+        .ore-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #d1e0e0;
+            padding: 3px 0;
+        }
+        .ore-turno { color: var(--text-light); }
+        .ore-valore { font-weight: bold; color: var(--text-main); }
+        .ore-totale {
+            margin-top: 12px;
+            font-size: 1.05em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: right;
+            border-top: 2px solid var(--primary-color);
+            padding-top: 8px;
+        }
+        @media (max-width: 600px) {
+            .ore-grid { grid-template-columns: 1fr; }
+            #ore-riepilogo { padding: 12px 10px; }
+        }
+
         /* Footer */
         .footer-info {
             margin-top: 60px;
@@ -285,6 +329,12 @@
 
         <div id="agenda-content-area">
             </div>
+
+        <div id="ore-riepilogo">
+            <h4>⏱ Riepilogo ore — <span id="ore-op-nome"></span></h4>
+            <div class="ore-grid" id="ore-grid"></div>
+            <div class="ore-totale" id="ore-totale"></div>
+        </div>
 
         <div class="footer-info">
             <span><strong>Mese:</strong> Febbraio 2026</span>
@@ -1542,9 +1592,55 @@
             }
         }
 
+        function parseMinuti(timeStr) {
+            // Accetta formati: "8:30 - 14:00" oppure "8:30 - 14:00"
+            if (!timeStr) return 0;
+            const m = timeStr.match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/);
+            if (!m) return 0;
+            const start = parseInt(m[1]) * 60 + parseInt(m[2]);
+            let   end   = parseInt(m[3]) * 60 + parseInt(m[4]);
+            if (end === 0) end = 24 * 60; // mezzanotte = fine turno
+            return Math.max(0, end - start);
+        }
+
+        function aggiornaRiepilogoOre(query, filteredData) {
+            const box = document.getElementById('ore-riepilogo');
+            if (!query) { box.style.display = 'none'; return; }
+
+            // Accumula minuti per tipo di turno
+            const perTurno = {};
+            let totMin = 0;
+            filteredData.forEach(day => {
+                (day.shifts || []).forEach(rawShift => {
+                    const s = parseShift(rawShift);
+                    const min = parseMinuti(s.time);
+                    perTurno[s.name] = (perTurno[s.name] || 0) + min;
+                    totMin += min;
+                });
+            });
+
+            const fmt = m => `${Math.floor(m/60)}h ${m%60 > 0 ? (m%60)+'m' : ''}`.trim();
+
+            document.getElementById('ore-op-nome').textContent = query.toUpperCase();
+            const grid = document.getElementById('ore-grid');
+            grid.innerHTML = Object.entries(perTurno)
+                .sort((a,b) => b[1]-a[1])
+                .map(([nome, min]) => `
+                    <div class="ore-row">
+                        <span class="ore-turno">${nome}</span>
+                        <span class="ore-valore">${fmt(min)}</span>
+                    </div>`).join('');
+            document.getElementById('ore-totale').textContent = `Totale: ${fmt(totMin)} (${filteredData.length} giorni)`;
+            box.style.display = 'block';
+        }
+
         window.applyFilter = function() {
             const query = document.getElementById('filterSelect').value.toLowerCase();
-            if (!query) { renderAgenda(turniData); return; }
+            if (!query) {
+                renderAgenda(turniData);
+                document.getElementById('ore-riepilogo').style.display = 'none';
+                return;
+            }
             const filteredData = turniData.map(dayInfo => {
                 const filteredShifts = (dayInfo.shifts || []).filter(rawShift => {
                     const s = parseShift(rawShift);
@@ -1553,6 +1649,7 @@
                 return { ...dayInfo, shifts: filteredShifts };
             }).filter(dayInfo => dayInfo.shifts.length > 0);
             renderAgenda(filteredData);
+            aggiornaRiepilogoOre(query, filteredData);
         }
 
         // Carica i dati all'apertura
