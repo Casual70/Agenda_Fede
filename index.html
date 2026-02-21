@@ -172,13 +172,19 @@
         <div class="subtitle" id="agenda-subtitle">Attendere caricamento dati...</div>
 
         <div class="controls-section">
-            <h3 style="margin-top:0; color:var(--primary-color); font-size:1em;">Gestione Dati</h3>
-            <input type="file" id="pdfUpload" accept=".pdf">
-            <button onclick="processAndUpload()">Elabora PDF e Salva</button>
+            <h3 style="margin-top:0; color:var(--primary-color); font-size:1em;">📄 Importazione PDF <span style="font-weight:normal; font-size:0.85em; color:var(--text-light);">(richiede server locale)</span></h3>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <input type="text" id="pdfFileName" placeholder="Es. 2603_ TURNI MARZO 2026 - ORARIO.pdf" style="padding:6px; flex:1; min-width:250px;">
+                <button onclick="elaboraPdf()">⚙ Elabora PDF</button>
+                <button onclick="salvaFirebase()" style="background-color:#2e7d32;">💾 Salva su Firebase</button>
+            </div>
+            <p id="server-hint" style="margin:8px 0 0; font-size:0.78em; color:var(--text-light);">Avvia <strong>server.py</strong> localmente per usare l'importazione.</p>
             <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
-            <input type="text" id="filterInput" placeholder="Es. Filtra per Operatore (FED)..." style="padding:5px; width:250px;">
-            <button onclick="applyFilter()" style="background-color: #666;">Filtra</button>
-            <button onclick="svuotaCollection()" style="background-color: #c0392b; margin-left: 10px;">🗑 Svuota DB</button>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <input type="text" id="filterInput" placeholder="Filtra per operatore (es. FED)..." style="padding:5px; flex:1; min-width:200px;">
+                <button onclick="applyFilter()" style="background-color:#666;">🔍 Filtra</button>
+                <button onclick="svuotaCollection()" style="background-color:#c0392b;">🗑 Svuota DB</button>
+            </div>
         </div>
 
         <div id="agenda-content-area">
@@ -208,7 +214,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Dati completi Febbraio 2026 (generati da parse_turni.py)
+        // Dati aggiornati (28 giorni) — generati automaticamente da parse_turni.py
         const turniDataMock = [
                     {
                                 "id": 1,
@@ -1310,31 +1316,67 @@
             }
         }
 
-        window.processAndUpload = async function() {
-            const fileInput = document.getElementById('pdfUpload');
-            if (fileInput.files.length === 0) {
-                alert("Seleziona prima un file PDF!");
+        // Controlla se il server locale è attivo
+        async function checkServer() {
+            try {
+                const r = await fetch('http://localhost:5000/api/status', { signal: AbortSignal.timeout(800) });
+                if (r.ok) {
+                    document.getElementById('server-hint').innerHTML =
+                        '🟢 Server locale attivo — puoi importare il PDF.';
+                }
+            } catch {
+                document.getElementById('server-hint').innerHTML =
+                        '🔴 Server locale non attivo. Avvia <strong>server.py</strong> per importare un PDF.';
+            }
+        }
+        checkServer();
+
+        // Elabora PDF tramite server locale e aggiorna turniData
+        window.elaboraPdf = async function() {
+            const pdfName = document.getElementById('pdfFileName').value.trim();
+            if (!pdfName) { alert('Inserisci il nome del file PDF.'); return; }
+            setStatus('Elaborazione PDF in corso...');
+            try {
+                const res = await fetch('http://localhost:5000/api/parse', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pdfName })
+                });
+                const result = await res.json();
+                if (!res.ok) throw new Error(result.error || 'Errore sconosciuto');
+                turniData = result.data;
+                renderAgenda(turniData);
+                setStatus(`✅ PDF elaborato: ${result.giorni} giorni. Clicca "Salva su Firebase" per sincronizzare.`);
+            } catch (error) {
+                if (error.name === 'TypeError' || error.name === 'AbortError') {
+                    setStatus('❌ Server locale non raggiungibile. Avvia server.py.');
+                } else {
+                    setStatus(`❌ ${error.message}`);
+                }
+            }
+        }
+
+        // Salva i dati correnti (turniData) su Firebase
+        window.salvaFirebase = async function() {
+            const datiDaSalvare = turniData.length > 0 ? turniData : turniDataMock;
+            if (datiDaSalvare.length === 0) {
+                alert('Nessun dato disponibile.');
                 return;
             }
-
             setStatus('Salvataggio su Firebase in corso...');
             try {
-                // Cancella i vecchi documenti prima di salvare i nuovi
-                const existing = await getDocs(collection(db, "turni"));
+                const existing = await getDocs(collection(db, 'turni'));
                 for (const docSnap of existing.docs) {
-                    await deleteDoc(doc(db, "turni", docSnap.id));
+                    await deleteDoc(doc(db, 'turni', docSnap.id));
                 }
-                // Salva i nuovi dati (mock - in futuro dal PDF reale)
-                for (const turno of turniDataMock) {
-                    await addDoc(collection(db, "turni"), turno);
+                for (const turno of datiDaSalvare) {
+                    await addDoc(collection(db, 'turni'), turno);
                 }
-                // Ricarica da Firebase
                 await loadFromFirebase();
-                alert("Dati salvati con successo su Firebase! ✅");
+                setStatus('✅ Sincronizzato con Firebase.');
             } catch (error) {
-                console.error("Errore Firebase:", error);
-                setStatus('Errore nel salvataggio ❌');
-                alert("Errore nel salvataggio. Controlla la console.");
+                console.error('Errore Firebase:', error);
+                setStatus('❌ Errore nel salvataggio su Firebase.');
             }
         }
 

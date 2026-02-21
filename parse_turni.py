@@ -32,14 +32,28 @@ def get_col(x):
 def fmt_time(t):
     return t.replace(',', ':')
 
-with pdfplumber.open('2602_ TURNI FEBBRAIO 2026 - ORARIO.pdf') as pdf:
+import sys
+
+# Accetta il nome del PDF come argomento oppure usa il default
+pdf_file = sys.argv[1] if len(sys.argv) > 1 else '2602_ TURNI FEBBRAIO 2026 - ORARIO.pdf'
+
+with pdfplumber.open(pdf_file) as pdf:
     page = pdf.pages[0]
     words = page.extract_words()
 
-# Leggi mese
-mese_num = 2
+# Leggi mese e anno dall'intestazione del PDF
+mese_num = None
+anno = None
 for w in words[:20]:
-    if w['text'] == 'Febbraio': mese_num = 2
+    for num, nome in MESI_IT.items():
+        if w['text'] == nome:
+            mese_num = num
+    if w['text'].isdigit() and len(w['text']) == 4:
+        anno = int(w['text'])
+if mese_num is None:
+    mese_num = 2  # fallback
+if anno is None:
+    anno = 2026   # fallback
 mese_str = MESI_IT[mese_num]
 
 # Raggruppa parole per riga con tolleranza 3px (fix per label "F DO 1" su y leggermente diversi)
@@ -152,6 +166,9 @@ print("\n=== VERIFICA RAPIDA ===")
 for d in turni_data:
     print(f"  Giorno {d['id']:2d} ({d['dayLabel'][:15]}): {len(d['shifts'])} turni - {[s['op'] for s in d['shifts']]}")
 
-with open('turni_febbraio_2026.json', 'w', encoding='utf-8') as f:
+# Nome file JSON dinamico
+json_filename = f'turni_{mese_str.lower()}_{anno or 2026}.json'
+
+with open(json_filename, 'w', encoding='utf-8') as f:
     json.dump(turni_data, f, ensure_ascii=False, indent=2)
-print(f"\nSalvato in turni_febbraio_2026.json ({len(turni_data)} giorni)")
+print(f"Salvato in {json_filename} ({len(turni_data)} giorni)")
