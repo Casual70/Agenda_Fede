@@ -192,6 +192,53 @@
             color: var(--text-main);
         }
 
+        /* ── RESPONSIVE MOBILE ── */
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+            }
+            .document-container {
+                padding: 16px 14px;
+                box-shadow: none;
+            }
+            h1 {
+                font-size: 1.5em;
+                letter-spacing: 1px;
+                margin-top: 14px;
+            }
+            .subtitle {
+                margin-bottom: 20px;
+            }
+            .controls-section {
+                padding: 12px 10px;
+                margin-bottom: 24px;
+            }
+            #filterSelect {
+                width: 100%;
+                min-width: unset;
+            }
+            .agenda-content {
+                margin-left: 0;
+            }
+            .shift-name {
+                width: 68px;
+                font-size: 0.88em;
+            }
+            .shift-op {
+                width: 44px;
+            }
+            .shift-time {
+                font-size: 0.82em;
+            }
+            .agenda-item.today,
+            .agenda-item.tomorrow {
+                padding: 8px 6px;
+            }
+            .footer-info {
+                margin-top: 30px;
+            }
+        }
+
         /* Footer */
         .footer-info {
             margin-top: 60px;
