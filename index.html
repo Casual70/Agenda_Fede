@@ -1330,6 +1330,11 @@
             if (prev) select.value = prev;
         }
 
+        function scrollToToday() {
+            const el = document.querySelector('.agenda-item.today');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         window.toggleSettings = function() {
             const panel = document.getElementById('settings-panel');
             const btn   = document.querySelector('.settings-toggle');
@@ -1404,11 +1409,20 @@
                 snapshot.forEach(docSnap => {
                     turniData.push({ _docId: docSnap.id, ...docSnap.data() });
                 });
+                // Riempie i giorni mancanti da turniDataMock
+                const fbIds = new Set(turniData.map(d => d.id));
+                turniDataMock.forEach(mock => {
+                    if (!fbIds.has(mock.id)) turniData.push(mock);
+                });
                 // Ordina per id numerico
                 turniData.sort((a, b) => (a.id || 0) - (b.id || 0));
                 renderAgenda(turniData);
                 populateOperatorSelect();
-                setStatus('Sincronizzato con Firebase ✅');
+                scrollToToday();
+                const mancanti = turniDataMock.length - fbIds.size;
+                setStatus(mancanti > 0
+                    ? `Sincronizzato con Firebase ✅ (${mancanti} giorni integrati da dati locali)`
+                    : 'Sincronizzato con Firebase ✅');
             } catch (error) {
                 console.error("Errore lettura Firebase:", error);
                 setStatus('Errore di connessione al database ❌');
@@ -1458,7 +1472,8 @@
 
         // Salva i dati correnti (turniData) su Firebase
         window.salvaFirebase = async function() {
-            const datiDaSalvare = turniData.length > 0 ? turniData : turniDataMock;
+            // Usa sempre turniDataMock come fonte autoritativa (dati completi dal PDF)
+            const datiDaSalvare = turniDataMock;
             if (datiDaSalvare.length === 0) {
                 alert('Nessun dato disponibile.');
                 return;
