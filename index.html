@@ -150,6 +150,48 @@
             border-left: 3px solid #f0a500;
         }
 
+        /* Giorno di oggi e domani */
+        .agenda-item.today {
+            background: #f1f8f1;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+        .agenda-item.today .day-label { color: #2e7d32; }
+        .agenda-item.tomorrow {
+            background: #fffde7;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+        .agenda-item.tomorrow .day-label { color: #e65100; }
+
+        /* Pannello impostazioni collassabile */
+        .settings-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 0.88em;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline dotted;
+        }
+        .settings-panel { display: none; }
+        .settings-panel.open { display: block; }
+
+        /* Select filtro operatore */
+        #filterSelect {
+            padding: 7px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 0.93em;
+            min-width: 220px;
+            background: #fff;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
         /* Footer */
         .footer-info {
             margin-top: 60px;
@@ -172,17 +214,24 @@
         <div class="subtitle" id="agenda-subtitle">Attendere caricamento dati...</div>
 
         <div class="controls-section">
-            <h3 style="margin-top:0; color:var(--primary-color); font-size:1em;">📄 Importazione PDF <span style="font-weight:normal; font-size:0.85em; color:var(--text-light);">(richiede server locale)</span></h3>
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <input type="text" id="pdfFileName" placeholder="Es. 2603_ TURNI MARZO 2026 - ORARIO.pdf" style="padding:6px; flex:1; min-width:250px;">
-                <button onclick="elaboraPdf()">⚙ Elabora PDF</button>
-                <button onclick="salvaFirebase()" style="background-color:#2e7d32;">💾 Salva su Firebase</button>
+            <!-- Filtro operatore (sempre visibile) -->
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+                <select id="filterSelect" onchange="applyFilter()">
+                    <option value="">👥 Tutti gli operatori</option>
+                </select>
             </div>
-            <p id="server-hint" style="margin:8px 0 0; font-size:0.78em; color:var(--text-light);">Avvia <strong>server.py</strong> localmente per usare l'importazione.</p>
-            <hr style="border:0; border-top:1px solid #ddd; margin:15px 0;">
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <input type="text" id="filterInput" placeholder="Filtra per operatore (es. FED)..." style="padding:5px; flex:1; min-width:200px;">
-                <button onclick="applyFilter()" style="background-color:#666;">🔍 Filtra</button>
+
+            <!-- Toggle impostazioni -->
+            <button class="settings-toggle" onclick="toggleSettings()">⚙ Impostazioni ▾</button>
+            <div class="settings-panel" id="settings-panel">
+                <h3 style="margin-top:10px; color:var(--primary-color); font-size:1em;">📄 Importazione PDF <span style="font-weight:normal; font-size:0.85em; color:var(--text-light);">(richiede server locale)</span></h3>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <input type="text" id="pdfFileName" placeholder="Es. 2603_ TURNI MARZO 2026 - ORARIO.pdf" style="padding:6px; flex:1; min-width:250px;">
+                    <button onclick="elaboraPdf()">⚙ Elabora PDF</button>
+                    <button onclick="salvaFirebase()" style="background-color:#2e7d32;">💾 Salva su Firebase</button>
+                </div>
+                <p id="server-hint" style="margin:8px 0 0; font-size:0.78em; color:var(--text-light);">Avvia <strong>server.py</strong> localmente per usare l'importazione.</p>
+                <hr style="border:0; border-top:1px solid #ddd; margin:12px 0 10px;">
                 <button onclick="svuotaCollection()" style="background-color:#c0392b;">🗑 Svuota DB</button>
             </div>
         </div>
@@ -1240,6 +1289,54 @@
             return { name: shift, op: '', time: '' };
         }
 
+        const MESI_IT = {
+            'gennaio':1,'febbraio':2,'marzo':3,'aprile':4,'maggio':5,'giugno':6,
+            'luglio':7,'agosto':8,'settembre':9,'ottobre':10,'novembre':11,'dicembre':12
+        };
+
+        function getDayClass(label) {
+            const m = label.match(/(\d+)\s+(\w+)/);
+            if (!m) return '';
+            const giorno = parseInt(m[1]);
+            const mese = MESI_IT[m[2].toLowerCase()];
+            if (!mese) return '';
+            const oggi = new Date();
+            const anno = oggi.getFullYear();
+            const d = new Date(anno, mese - 1, giorno);
+            const dataOggi  = new Date(anno, oggi.getMonth(), oggi.getDate());
+            const dataDomani = new Date(anno, oggi.getMonth(), oggi.getDate() + 1);
+            if (d.getTime() === dataOggi.getTime())  return 'today';
+            if (d.getTime() === dataDomani.getTime()) return 'tomorrow';
+            return '';
+        }
+
+        function populateOperatorSelect() {
+            const select = document.getElementById('filterSelect');
+            const prev = select.value;
+            const ops = new Set();
+            turniData.forEach(day => {
+                (day.shifts || []).forEach(rawShift => {
+                    const s = parseShift(rawShift);
+                    if (s.op) ops.add(s.op.toUpperCase());
+                });
+            });
+            select.innerHTML = '<option value="">👥 Tutti gli operatori</option>';
+            [...ops].sort().forEach(op => {
+                const opt = document.createElement('option');
+                opt.value = op.toLowerCase();
+                opt.textContent = op;
+                select.appendChild(opt);
+            });
+            if (prev) select.value = prev;
+        }
+
+        window.toggleSettings = function() {
+            const panel = document.getElementById('settings-panel');
+            const btn   = document.querySelector('.settings-toggle');
+            panel.classList.toggle('open');
+            btn.textContent = panel.classList.contains('open') ? '⚙ Impostazioni ▴' : '⚙ Impostazioni ▾';
+        }
+
         function renderAgenda(dataToRender) {
             const container = document.getElementById('agenda-content-area');
             container.innerHTML = '';
@@ -1252,8 +1349,9 @@
 
             dataToRender.forEach((dayData) => {
                 const label = dayData.dayLabel || dayData.day || `Giorno ${dayData.id}`;
+                const dayClass = getDayClass(label);
                 let html = `
-                    <div class="agenda-item">
+                    <div class="agenda-item ${dayClass}">`
                         <div class="agenda-title">
                             <span class="day-separator"></span>
                             <span class="day-label">${label}</span>
@@ -1309,6 +1407,7 @@
                 // Ordina per id numerico
                 turniData.sort((a, b) => (a.id || 0) - (b.id || 0));
                 renderAgenda(turniData);
+                populateOperatorSelect();
                 setStatus('Sincronizzato con Firebase ✅');
             } catch (error) {
                 console.error("Errore lettura Firebase:", error);
@@ -1346,6 +1445,7 @@
                 if (!res.ok) throw new Error(result.error || 'Errore sconosciuto');
                 turniData = result.data;
                 renderAgenda(turniData);
+                populateOperatorSelect();
                 setStatus(`✅ PDF elaborato: ${result.giorni} giorni. Clicca "Salva su Firebase" per sincronizzare.`);
             } catch (error) {
                 if (error.name === 'TypeError' || error.name === 'AbortError') {
@@ -1381,9 +1481,13 @@
         }
 
         window.applyFilter = function() {
-            const query = document.getElementById('filterInput').value.toLowerCase();
+            const query = document.getElementById('filterSelect').value.toLowerCase();
+            if (!query) { renderAgenda(turniData); return; }
             const filteredData = turniData.map(dayInfo => {
-                const filteredShifts = dayInfo.shifts.filter(shift => shift.toLowerCase().includes(query));
+                const filteredShifts = (dayInfo.shifts || []).filter(rawShift => {
+                    const s = parseShift(rawShift);
+                    return s.op.toLowerCase() === query;
+                });
                 return { ...dayInfo, shifts: filteredShifts };
             }).filter(dayInfo => dayInfo.shifts.length > 0);
             renderAgenda(filteredData);
