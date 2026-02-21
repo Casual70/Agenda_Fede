@@ -5,56 +5,55 @@
 REQUISITI
 ---------
 - Python 3 installato
-- Libreria pdfplumber (già installata)
+- Librerie: pdfplumber, flask, flask-cors (già installate)
 - Git configurato
 
-PASSAGGI
---------
+METODO A - DAL BROWSER (CONSIGLIATO)
+--------------------------------------
 
 1. COPIA IL PDF DEL NUOVO MESE
    Metti il PDF nella cartella:
    C:\Users\casua\Agenda_Fede\Agenda_Fede\
 
-2. MODIFICA parse_turni.py
-   Apri il file parse_turni.py e cambia questa riga:
+2. AVVIA IL SERVER LOCALE
+   Apri una finestra CMD o PowerShell e lancia:
 
-     pdfplumber.open('2602_ TURNI FEBBRAIO 2026 - ORARIO.pdf')
+     cd C:\Users\casua\Agenda_Fede\Agenda_Fede
+     C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe server.py
 
-   Con il nome del nuovo PDF, es. per marzo:
+   Lascia questa finestra aperta (il server gira su http://localhost:8080)
 
-     pdfplumber.open('2603_ TURNI MARZO 2026 - ORARIO.pdf')
+3. APRI IL BROWSER
+   Vai su:  http://localhost:8080
 
-   Cambia anche il mese nella riga successiva:
+4. USA L'INTERFACCIA
+   - Nel campo "Nome PDF" scrivi il nome del file PDF (es. 2603_ TURNI MARZO 2026 - ORARIO.pdf)
+   - Clicca ⚙ "Elabora PDF" → i dati appaiono a schermo
+   - Clicca 💾 "Salva su Firebase" → i dati vengono salvati nel database
 
-     if w['text'] == 'Febbraio': mese_num = 2
+5. PUBBLICA SU GITHUB
+   Dopo aver verificato i dati, dal terminale:
 
-   Es. per marzo:
+     git add index.html
+     git commit -m "Aggiungi turni marzo 2026"
+     git push
 
-     if w['text'] == 'Marzo': mese_num = 3
+   Il sito GitHub Pages si aggiornerà in automatico.
 
-3. ESEGUI IL PARSER
-   Apri il terminale nella cartella del progetto e lancia:
 
-     C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe parse_turni.py
+METODO B - DA TERMINALE (ALTERNATIVO)
+--------------------------------------
 
-   Verifica nell'output che vengano trovati tutti i giorni del mese
-   e che gli operatori siano corretti.
+1. COPIA IL PDF nella cartella del progetto
 
-4. MODIFICA inject_data.py
-   Apri inject_data.py e aggiorna il nome del file JSON generato:
+2. ESEGUI IL PARSER
+   C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe parse_turni.py "2603_ TURNI MARZO 2026 - ORARIO.pdf"
 
-     with open('turni_febbraio_2026.json', ...) 
+3. INIETTA I DATI IN index.html
+   C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe inject_data.py turni_marzo_2026.json
 
-   Es. per marzo:
-
-     with open('turni_marzo_2026.json', ...)
-
-5. ESEGUI L'INIEZIONE IN index.html
-   Dal terminale:
-
-     C:/Users/casua/AppData/Local/Programs/Python/Python313/python.exe inject_data.py
-
-   Il file index.html verrà aggiornato automaticamente con i nuovi dati.
+4. PUBBLICA SU GITHUB
+   git add index.html && git commit -m "Turni marzo 2026" && git push
 
 6. AGGIORNA ANCHE IL TITOLO IN index.html (opzionale)
    Cerca la riga:
