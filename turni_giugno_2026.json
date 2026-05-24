@@ -1,0 +1,1046 @@
+[
+  {
+    "id": 1,
+    "dayLabel": "Lunedì 1 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "FED",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "PET",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "SAN",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CAR",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CHIA",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "ERME",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "dayLabel": "Mercoledì 3 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "PET",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "EMA",
+        "time": "7:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "FED",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "STE",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "ANNA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "SAN",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "dayLabel": "Giovedì 4 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "SAN",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ERME",
+        "time": "7:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "BAD",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "FED",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "EMA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "CAR",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "dayLabel": "Venerdì 5 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "CAR",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "PET",
+        "time": "7:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "ERME",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CHIA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "SAN",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "FED",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "dayLabel": "Sabato 6 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "FED",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ERME",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "STE",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "ANNA",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "PET",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "BAD",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "dayLabel": "Domenica 7 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "BAD",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "STE",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "ANNA",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "SAN",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CHIA",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "ERME",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "dayLabel": "Lunedì 8 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "ERME",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "PET",
+        "time": "7:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "SAN",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "ANNA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "EMA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "FED",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "dayLabel": "Martedì 9 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "FED",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "SAN",
+        "time": "7:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "ERME",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CAR",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "BAD",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "dayLabel": "Mercoledì 10 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "BAD",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "STE",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "EMA",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CHIA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "ANNA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "SAN",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "dayLabel": "Giovedì 11 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "SAN",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "CHIA",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "CAR",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "STE",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "ERME",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "PET",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "dayLabel": "Venerdì 12 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "PET",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "EMA",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "CAR",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "FED",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "BAD",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "ERME",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "dayLabel": "Sabato 13 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "ERME",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "CAR",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "FED",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "BAD",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "STE",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "EMA",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "dayLabel": "Domenica 14 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "EMA",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "BAD",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "PET",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "STE",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "FED",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "CAR",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "dayLabel": "Lunedì 15 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "CAR",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ERME",
+        "time": "8:00 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "FED",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CHIA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "ANNA",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "dayLabel": "Martedì 16 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "ANNA",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "EMA",
+        "time": "8:00 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "PET",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CAR",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "ERME",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "FED",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "dayLabel": "Mercoledì 17 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "FED",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "PET",
+        "time": "8:00 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "STE",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "EMA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CAR",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "ERME",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "dayLabel": "Giovedì 18 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "ERME",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ANNA",
+        "time": "8:00 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "BAD",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "PET",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CHIA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "STE",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "dayLabel": "Venerdì 19 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "STE",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "CAR",
+        "time": "8:00 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "EMA",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "FED",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "BAD",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "PET",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "dayLabel": "Sabato 20 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "PET",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "CHIA",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "FED",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "EMA",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "ANNA",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "CAR",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "dayLabel": "Domenica 21 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "CAR",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "BAD",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "EMA",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "ANNA",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CHIA",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "SAN",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "dayLabel": "Lunedì 22 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "SAN",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ANNA",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "FED",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "EMA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CHIA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "BAD",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "dayLabel": "Martedì 23 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "BAD",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "EMA",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "CAR",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "PET",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "SAN",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "ERME",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "dayLabel": "Mercoledì 24 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "ERME",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "CAR",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "FED",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "ANNA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "BAD",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "PET",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "dayLabel": "Giovedì 25 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "PET",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "EMA",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "BAD",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "ERME",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "CAR",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "SAN",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "dayLabel": "Venerdì 26 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "SAN",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ERME",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "FED",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "CHIA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "CAR",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "dayLabel": "Sabato 27 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "CAR",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "ERME",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "CHIA",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "SAN",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "PET",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "FED",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "dayLabel": "Domenica 28 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "FED",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "SAN",
+        "time": "8:30 - 14:00"
+      },
+      {
+        "name": "MATT 2",
+        "op": "CHIA",
+        "time": "10:00 - 15:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "EMA",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "ERME",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "PET",
+        "time": "20:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "dayLabel": "Lunedì 29 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "PET",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "BAD",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "CAR",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "EMA",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "SAN",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "CHIA",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "dayLabel": "Martedì 30 Giugno",
+    "shifts": [
+      {
+        "name": "NOTTE 2",
+        "op": "CHIA",
+        "time": "0:00 - 9:00"
+      },
+      {
+        "name": "MATT 1",
+        "op": "FED",
+        "time": "8:30 - 14:30"
+      },
+      {
+        "name": "CENTR.",
+        "op": "SAN",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
+        "op": "ERME",
+        "time": "15:00 - 21:00"
+      },
+      {
+        "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
+        "op": "CAR",
+        "time": "22:00 - 24:00"
+      }
+    ]
+  }
+]

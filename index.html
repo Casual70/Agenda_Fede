@@ -456,47 +456,47 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Dati aggiornati (30 giorni) — generati automaticamente da parse_turni.py
+        // Dati aggiornati (29 giorni) — generati automaticamente da parse_turni.py
         let turniDataMock = [
                     {
-                                "id": 2,
-                                "dayLabel": "Sabato 2 Maggio",
+                                "id": 1,
+                                "dayLabel": "Lunedì 1 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CHIA",
+                                                        "op": "FED",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "EMA",
+                                                        "op": "PET",
                                                         "time": "8:30 - 14:00"
                                             },
                                             {
                                                         "name": "MATT 2",
-                                                        "op": "CAR",
-                                                        "time": "9:30 - 15:00"
+                                                        "op": "SAN",
+                                                        "time": "10:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "FED",
+                                                        "op": "CAR",
                                                         "time": "15:00 - 20:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ERME",
+                                                        "op": "CHIA",
                                                         "time": "16:00 - 21:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "PET",
+                                                        "op": "ERME",
                                                         "time": "20:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 3,
-                                "dayLabel": "Domenica 3 Maggio",
+                                "dayLabel": "Mercoledì 3 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -505,34 +505,34 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "CHIA",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "EMA",
+                                                        "time": "7:30 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "ANNA",
-                                                        "time": "10:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "FED",
+                                                        "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CAR",
-                                                        "time": "15:00 - 20:00"
+                                                        "op": "STE",
+                                                        "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "16:00 - 21:00"
+                                                        "op": "ANNA",
+                                                        "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
                                                         "op": "SAN",
-                                                        "time": "20:00 - 24:00"
+                                                        "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 4,
-                                "dayLabel": "Lunedì 4 Maggio",
+                                "dayLabel": "Giovedì 4 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -546,33 +546,33 @@
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "ANNA",
+                                                        "op": "BAD",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "BAD",
+                                                        "op": "FED",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "CHIA",
+                                                        "op": "EMA",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "FED",
+                                                        "op": "CAR",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 5,
-                                "dayLabel": "Martedì 5 Maggio",
+                                "dayLabel": "Venerdì 5 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "FED",
+                                                        "op": "CAR",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
@@ -582,65 +582,101 @@
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "FED",
+                                                        "op": "ERME",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "STE",
+                                                        "op": "CHIA",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ERME",
+                                                        "op": "SAN",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "PET",
+                                                        "op": "FED",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 6,
-                                "dayLabel": "Mercoledì 6 Maggio",
+                                "dayLabel": "Sabato 6 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CAR",
+                                                        "op": "FED",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "EMA",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "ERME",
+                                                        "time": "8:30 - 14:00"
                                             },
                                             {
-                                                        "name": "CENTR.",
-                                                        "op": "SAN",
-                                                        "time": "14:00 - 19:00"
+                                                        "name": "MATT 2",
+                                                        "op": "STE",
+                                                        "time": "10:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
                                                         "op": "ANNA",
-                                                        "time": "15:00 - 21:00"
+                                                        "time": "15:00 - 20:00"
                                             },
                                             {
                                                         "name": "POM 2",
                                                         "op": "PET",
-                                                        "time": "15:30 - 22:30"
+                                                        "time": "16:00 - 21:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "ERME",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "BAD",
+                                                        "time": "20:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 7,
-                                "dayLabel": "Giovedì 7 Maggio",
+                                "dayLabel": "Domenica 7 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "BAD",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "STE",
+                                                        "time": "8:30 - 14:00"
+                                            },
+                                            {
+                                                        "name": "MATT 2",
+                                                        "op": "ANNA",
+                                                        "time": "10:00 - 15:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "SAN",
+                                                        "time": "15:00 - 20:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "CHIA",
+                                                        "time": "16:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "ERME",
+                                                        "time": "20:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 8,
+                                "dayLabel": "Lunedì 8 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -649,7 +685,7 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "FED",
+                                                        "op": "PET",
                                                         "time": "7:30 - 14:30"
                                             },
                                             {
@@ -659,7 +695,7 @@
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "STE",
+                                                        "op": "ANNA",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
@@ -669,86 +705,86 @@
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 8,
-                                "dayLabel": "Venerdì 8 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "BAD",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "CAR",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "ANNA",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "SAN",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "PET",
+                                                        "op": "FED",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 9,
-                                "dayLabel": "Sabato 9 Maggio",
+                                "dayLabel": "Martedì 9 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
+                                                        "op": "FED",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "FED",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "SAN",
+                                                        "time": "7:30 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "CAR",
-                                                        "time": "9:30 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "ERME",
+                                                        "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "BAD",
-                                                        "time": "15:00 - 20:00"
+                                                        "op": "CAR",
+                                                        "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ANNA",
-                                                        "time": "16:00 - 21:00"
+                                                        "op": "PET",
+                                                        "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "20:00 - 24:00"
+                                                        "op": "BAD",
+                                                        "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 10,
-                                "dayLabel": "Domenica 10 Maggio",
+                                "dayLabel": "Mercoledì 10 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "BAD",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "STE",
+                                                        "time": "8:30 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "EMA",
+                                                        "time": "14:00 - 19:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "CHIA",
+                                                        "time": "15:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "ANNA",
+                                                        "time": "15:30 - 22:30"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "SAN",
+                                                        "time": "22:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 11,
+                                "dayLabel": "Giovedì 11 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -757,44 +793,8 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ERME",
-                                                        "time": "8:30 - 14:00"
-                                            },
-                                            {
-                                                        "name": "MATT 2",
-                                                        "op": "STE",
-                                                        "time": "10:00 - 15:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CAR",
-                                                        "time": "15:00 - 20:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "PET",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "EMA",
-                                                        "time": "20:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 11,
-                                "dayLabel": "Lunedì 11 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "EMA",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
                                                         "op": "CHIA",
-                                                        "time": "7:30 - 14:30"
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
@@ -808,213 +808,69 @@
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "PET",
+                                                        "op": "ERME",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "ERME",
+                                                        "op": "PET",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 12,
-                                "dayLabel": "Martedì 12 Maggio",
+                                "dayLabel": "Venerdì 12 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "ERME",
+                                                        "op": "PET",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ANNA",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "EMA",
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "SAN",
+                                                        "op": "CAR",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CHIA",
+                                                        "op": "FED",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "CAR",
+                                                        "op": "BAD",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "PET",
+                                                        "op": "ERME",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 13,
-                                "dayLabel": "Mercoledì 13 Maggio",
+                                "dayLabel": "Sabato 13 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
+                                                        "op": "ERME",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ERME",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "ANNA",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "EMA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "STE",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 14,
-                                "dayLabel": "Giovedì 14 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "SAN",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "BAD",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "PET",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
                                                         "op": "CAR",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 15,
-                                "dayLabel": "Venerdì 15 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "CAR",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "SAN",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "FED",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 16,
-                                "dayLabel": "Sabato 16 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "BAD",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "ERME",
                                                         "time": "8:30 - 14:00"
                                             },
                                             {
                                                         "name": "MATT 2",
-                                                        "op": "CHIA",
-                                                        "time": "9:30 - 15:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 20:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
                                                         "op": "FED",
-                                                        "time": "20:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 17,
-                                "dayLabel": "Domenica 17 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "FED",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "SAN",
-                                                        "time": "8:30 - 14:00"
-                                            },
-                                            {
-                                                        "name": "MATT 2",
-                                                        "op": "PET",
                                                         "time": "10:00 - 15:00"
                                             },
                                             {
@@ -1024,19 +880,163 @@
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "CHIA",
+                                                        "op": "STE",
                                                         "time": "16:00 - 21:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "ERME",
+                                                        "op": "EMA",
                                                         "time": "20:00 - 24:00"
                                             }
                                 ]
                     },
                     {
+                                "id": 14,
+                                "dayLabel": "Domenica 14 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "EMA",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "BAD",
+                                                        "time": "8:30 - 14:00"
+                                            },
+                                            {
+                                                        "name": "MATT 2",
+                                                        "op": "PET",
+                                                        "time": "10:00 - 15:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "STE",
+                                                        "time": "15:00 - 20:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "FED",
+                                                        "time": "16:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "CAR",
+                                                        "time": "20:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 15,
+                                "dayLabel": "Lunedì 15 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "CAR",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "ERME",
+                                                        "time": "8:00 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "FED",
+                                                        "time": "14:00 - 19:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "CHIA",
+                                                        "time": "15:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "PET",
+                                                        "time": "15:30 - 22:30"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "ANNA",
+                                                        "time": "22:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 16,
+                                "dayLabel": "Martedì 16 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "ANNA",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "EMA",
+                                                        "time": "8:00 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "PET",
+                                                        "time": "14:00 - 19:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "CAR",
+                                                        "time": "15:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "ERME",
+                                                        "time": "15:30 - 22:30"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "FED",
+                                                        "time": "22:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 17,
+                                "dayLabel": "Mercoledì 17 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "FED",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "PET",
+                                                        "time": "8:00 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "STE",
+                                                        "time": "14:00 - 19:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "EMA",
+                                                        "time": "15:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "CAR",
+                                                        "time": "15:30 - 22:30"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "ERME",
+                                                        "time": "22:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
                                 "id": 18,
-                                "dayLabel": "Lunedì 18 Maggio",
+                                "dayLabel": "Giovedì 18 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -1045,12 +1045,12 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "CAR",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "ANNA",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "EMA",
+                                                        "op": "BAD",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
@@ -1060,7 +1060,7 @@
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "SAN",
+                                                        "op": "CHIA",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
@@ -1072,7 +1072,7 @@
                     },
                     {
                                 "id": 19,
-                                "dayLabel": "Martedì 19 Maggio",
+                                "dayLabel": "Venerdì 19 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -1081,238 +1081,238 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "BAD",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "CAR",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "FED",
+                                                        "op": "EMA",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CAR",
+                                                        "op": "FED",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "PET",
+                                                        "op": "BAD",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "SAN",
+                                                        "op": "PET",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 20,
-                                "dayLabel": "Mercoledì 20 Maggio",
+                                "dayLabel": "Sabato 20 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "SAN",
+                                                        "op": "PET",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ERME",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "CHIA",
+                                                        "time": "8:30 - 14:00"
                                             },
                                             {
-                                                        "name": "CENTR.",
-                                                        "op": "BAD",
-                                                        "time": "14:00 - 19:00"
+                                                        "name": "MATT 2",
+                                                        "op": "FED",
+                                                        "time": "10:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "ANNA",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "EMA",
+                                                        "time": "15:00 - 20:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "CAR",
-                                                        "time": "15:30 - 22:30"
+                                                        "op": "ANNA",
+                                                        "time": "16:00 - 21:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "CAR",
+                                                        "time": "20:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 21,
-                                "dayLabel": "Giovedì 21 Maggio",
+                                "dayLabel": "Domenica 21 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
+                                                        "op": "CAR",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "FED",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "BAD",
+                                                        "time": "8:30 - 14:00"
                                             },
                                             {
-                                                        "name": "CENTR.",
-                                                        "op": "STE",
-                                                        "time": "14:00 - 19:00"
+                                                        "name": "MATT 2",
+                                                        "op": "EMA",
+                                                        "time": "10:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ANNA",
+                                                        "time": "15:00 - 20:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "15:30 - 22:30"
+                                                        "op": "CHIA",
+                                                        "time": "16:00 - 21:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "CAR",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "SAN",
+                                                        "time": "20:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 22,
-                                "dayLabel": "Venerdì 22 Maggio",
+                                "dayLabel": "Lunedì 22 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CAR",
+                                                        "op": "SAN",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "EMA",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "ANNA",
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "BAD",
+                                                        "op": "FED",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "ANNA",
+                                                        "op": "EMA",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "SAN",
+                                                        "op": "CHIA",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "ERME",
+                                                        "op": "BAD",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 23,
-                                "dayLabel": "Sabato 23 Maggio",
+                                "dayLabel": "Martedì 23 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "ERME",
+                                                        "op": "BAD",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "EMA",
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "STE",
-                                                        "time": "9:30 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "CAR",
+                                                        "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "SAN",
-                                                        "time": "15:00 - 20:00"
+                                                        "op": "PET",
+                                                        "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "FED",
-                                                        "time": "16:00 - 21:00"
+                                                        "op": "SAN",
+                                                        "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "ANNA",
-                                                        "time": "20:00 - 24:00"
+                                                        "op": "ERME",
+                                                        "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 24,
-                                "dayLabel": "Domenica 24 Maggio",
+                                "dayLabel": "Mercoledì 24 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "ANNA",
+                                                        "op": "ERME",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "STE",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "CAR",
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "SAN",
-                                                        "time": "10:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "FED",
+                                                        "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "PET",
-                                                        "time": "15:00 - 20:00"
+                                                        "op": "ANNA",
+                                                        "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "16:00 - 21:00"
+                                                        "op": "BAD",
+                                                        "time": "15:30 - 22:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "20:00 - 24:00"
+                                                        "op": "PET",
+                                                        "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 25,
-                                "dayLabel": "Lunedì 25 Maggio",
+                                "dayLabel": "Giovedì 25 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "BAD",
+                                                        "op": "PET",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "EMA",
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "ERME",
+                                                        "op": "BAD",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "STE",
+                                                        "op": "ERME",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "FED",
+                                                        "op": "CAR",
                                                         "time": "15:30 - 22:30"
                                             },
                                             {
@@ -1324,7 +1324,7 @@
                     },
                     {
                                 "id": 26,
-                                "dayLabel": "Martedì 26 Maggio",
+                                "dayLabel": "Venerdì 26 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -1333,17 +1333,17 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "EMA",
-                                                        "time": "7:30 - 14:30"
+                                                        "op": "ERME",
+                                                        "time": "8:30 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "BAD",
+                                                        "op": "FED",
                                                         "time": "14:00 - 19:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "ERME",
+                                                        "op": "CHIA",
                                                         "time": "15:00 - 21:00"
                                             },
                                             {
@@ -1353,158 +1353,14 @@
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "FED",
+                                                        "op": "CAR",
                                                         "time": "22:00 - 24:00"
                                             }
                                 ]
                     },
                     {
                                 "id": 27,
-                                "dayLabel": "Mercoledì 27 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "FED",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "CHIA",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "EMA",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "SAN",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "ANNA",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "ERME",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 28,
-                                "dayLabel": "Giovedì 28 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "ERME",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "SAN",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "EMA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "STE",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 29,
-                                "dayLabel": "Venerdì 29 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "BAD",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "SAN",
-                                                        "time": "7:30 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "FED",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "ERME",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "CHIA",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 30,
-                                "dayLabel": "Sabato 30 Maggio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "PET",
-                                                        "time": "0:00 - 9:00"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "BAD",
-                                                        "time": "8:30 - 14:00"
-                                            },
-                                            {
-                                                        "name": "MATT 2",
-                                                        "op": "ANNA",
-                                                        "time": "9:30 - 15:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 20:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "CAR",
-                                                        "time": "20:00 - 24:00"
-                                            }
-                                ]
-                    },
-                    {
-                                "id": 31,
-                                "dayLabel": "Domenica 31 Maggio",
+                                "dayLabel": "Sabato 27 Giugno",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -1513,7 +1369,7 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "STE",
+                                                        "op": "ERME",
                                                         "time": "8:30 - 14:00"
                                             },
                                             {
@@ -1523,12 +1379,12 @@
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "ANNA",
+                                                        "op": "SAN",
                                                         "time": "15:00 - 20:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "BAD",
+                                                        "op": "PET",
                                                         "time": "16:00 - 21:00"
                                             },
                                             {
@@ -1537,9 +1393,117 @@
                                                         "time": "20:00 - 24:00"
                                             }
                                 ]
+                    },
+                    {
+                                "id": 28,
+                                "dayLabel": "Domenica 28 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "FED",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "SAN",
+                                                        "time": "8:30 - 14:00"
+                                            },
+                                            {
+                                                        "name": "MATT 2",
+                                                        "op": "CHIA",
+                                                        "time": "10:00 - 15:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "EMA",
+                                                        "time": "15:00 - 20:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "ERME",
+                                                        "time": "16:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "PET",
+                                                        "time": "20:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 29,
+                                "dayLabel": "Lunedì 29 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "PET",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "BAD",
+                                                        "time": "8:30 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "CAR",
+                                                        "time": "14:00 - 19:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "EMA",
+                                                        "time": "15:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "SAN",
+                                                        "time": "15:30 - 22:30"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "CHIA",
+                                                        "time": "22:00 - 24:00"
+                                            }
+                                ]
+                    },
+                    {
+                                "id": 30,
+                                "dayLabel": "Martedì 30 Giugno",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "CHIA",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "FED",
+                                                        "time": "8:30 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "SAN",
+                                                        "time": "14:00 - 19:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "ERME",
+                                                        "time": "15:00 - 21:00"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "PET",
+                                                        "time": "15:30 - 22:30"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "CAR",
+                                                        "time": "22:00 - 24:00"
+                                            }
+                                ]
                     }
         ];
-        let turniMeseLabel = "MAGGIO 2026"; // aggiornato dinamicamente da elaboraPdf / inject_data.py
+        let turniMeseLabel = "GIUGNO 2026"; // aggiornato dinamicamente da elaboraPdf / inject_data.py
 
         let turniData = [];
 
