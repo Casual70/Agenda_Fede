@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda Turni</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         /* STILI ISPIRATI ALLO SCREENSHOT (Minimal, Teal/Sage Green) */
         :root {
@@ -1931,19 +1932,208 @@
         checkServer();
 
         // Elabora PDF tramite server locale e aggiorna turniData
+
+        // Configura worker PDF.js
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        // Parser PDF lato browser: porta la logica di parse_turni.py in JavaScript
+        async function parsePdfBrowser(file) {
+            if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js non disponibile');
+
+            const GIORNI = { DO:'Domenica',LU:'Lunedì',MA:'Martedì',
+                             ME:'Mercoledì',GI:'Giovedì',VE:'Venerdì',SA:'Sabato' };
+            const MESI   = { 1:'Gennaio',2:'Febbraio',3:'Marzo',4:'Aprile',5:'Maggio',
+                             6:'Giugno',7:'Luglio',8:'Agosto',9:'Settembre',
+                             10:'Ottobre',11:'Novembre',12:'Dicembre' };
+            const MESI_INV = Object.fromEntries(Object.entries(MESI).map(([k,v]) => [v.toLowerCase(), +k]));
+
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf  = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const page = await pdf.getPage(1);
+            const viewport    = page.getViewport({ scale: 1 });
+            const textContent = await page.getTextContent();
+
+            // Converti items in {text, x0, top}
+            const rawWords = [];
+            for (const item of textContent.items) {
+                const str = item.str.trim();
+                if (!str) continue;
+                rawWords.push({
+                    text: str,
+                    x0:  item.transform[4],
+                    top: viewport.height - item.transform[5],
+                    x1:  item.transform[4] + (item.width || 10)
+                });
+            }
+
+            // Raggruppa per riga (tolleranza 3px)
+            const rowsRaw = [];
+            for (const w of rawWords) {
+                let placed = false;
+                for (const row of rowsRaw) {
+                    if (Math.abs(row[0] - w.top) <= 3) { row[1].push(w); placed = true; break; }
+                }
+                if (!placed) rowsRaw.push([w.top, [w]]);
+            }
+            rowsRaw.sort((a, b) => a[0] - b[0]);
+
+            // Rileva mese e anno
+            let meseNum = null, anno = null;
+            for (const [, rw] of rowsRaw.slice(0, 5)) {
+                for (const w of rw) {
+                    if (MESI_INV[w.text.toLowerCase()]) meseNum = MESI_INV[w.text.toLowerCase()];
+                    if (/^\d{4}$/.test(w.text)) anno = parseInt(w.text);
+                }
+            }
+            meseNum = meseNum || 8;
+            anno    = anno    || new Date().getFullYear();
+            const meseStr = MESI[meseNum];
+
+            // Rileva range colonne dall'intestazione (midpoint tra header adiacenti)
+            const TURNO_LABELS = new Set(['NOTTE','MATT','CENTR.','POM']);
+            let headerRow = null;
+            for (const [, rw] of rowsRaw.slice(0, 15)) {
+                if (rw.filter(w => TURNO_LABELS.has(w.text)).length >= 3) { headerRow = rw; break; }
+            }
+            let colRanges = { 'NOTTE 2':[40,82],'MATT 1':[82,117],'MATT 2':[117,158],
+                              'CENTR.':[158,218],'POM 1':[218,250],'POM 2':[250,285],'NOTTE 1':[285,342] };
+            if (headerRow) {
+                const ws = [...headerRow].sort((a,b) => a.x0 - b.x0);
+                const colStarts = {};
+                for (let i = 0; i < ws.length; i++) {
+                    const w = ws[i];
+                    if (w.text === 'CENTR.') { colStarts['CENTR.'] = w.x0; continue; }
+                    if (['NOTTE','MATT','POM'].includes(w.text)) {
+                        for (let j = i+1; j < Math.min(i+4, ws.length); j++) {
+                            if (['1','2'].includes(ws[j].text) && ws[j].x0 - w.x0 < 30) {
+                                const cn = w.text + ' ' + ws[j].text;
+                                if (!(cn in colStarts)) colStarts[cn] = w.x0;
+                                break;
+                            }
+                        }
+                    }
+                }
+                const COL_ORDER = ['NOTTE 2','MATT 1','MATT 2','CENTR.','POM 1','POM 2','NOTTE 1'];
+                const present = COL_ORDER.filter(c => c in colStarts).map(c => [c, colStarts[c]]);
+                if (present.length >= 4) {
+                    colRanges = {};
+                    for (let i = 0; i < present.length; i++) {
+                        const [col, pos] = present[i];
+                        const left  = i > 0 ? (present[i-1][1] + pos) / 2 : pos - 20;
+                        const right = i < present.length-1 ? (pos + present[i+1][1]) / 2 : pos + 80;
+                        colRanges[col] = [Math.round(left*10)/10, Math.round(right*10)/10];
+                    }
+                }
+            }
+            const getCol = x => Object.entries(colRanges).find(([,[x0,x1]]) => x >= x0 && x < x1)?.[0] || null;
+
+            // Pattern
+            const DAY_ABBR  = /^(LU|MA|ME|GI|VE|SA|DO)$/;
+            const NUM_PAT   = /^\d{1,2}$/;
+            const TIME_PAT  = /^\d{1,2},\d{2}$/;
+            const OP_PAT    = /^[A-Z]{2,5}\.?$/;
+            const SKIP      = new Set(['ANNO','MESE','MESI','TURNI','NOTTE','MATT','CENTR','POM',
+                                       'SUPPL','SPEZZ','RIUNIONI','FERIE','SUPERV','GG','N','E','F','R','OP']);
+
+            // Trova righe giorno
+            const dayRows = [];
+            for (let idx = 0; idx < rowsRaw.length; idx++) {
+                const [y, rw] = rowsRaw[idx];
+                const left = rw.filter(w => w.x0 < 50);
+                const texts = left.map(w => w.text);
+                if (texts.length >= 3 && texts[0]==='F' && texts[1]==='DO' && NUM_PAT.test(texts[2]))
+                    dayRows.push([idx, y, parseInt(texts[2]), 'DO']);
+                else if (texts.length >= 2 && DAY_ABBR.test(texts[0]) && NUM_PAT.test(texts[1]))
+                    dayRows.push([idx, y, parseInt(texts[1]), texts[0]]);
+                else if (texts.length >= 1 && /^(MA|ME|GI|VE|LU|SA)\d{2}$/.test(texts[0]))
+                    dayRows.push([idx, y, parseInt(texts[0].slice(2)), texts[0].slice(0,2)]);
+            }
+            if (!dayRows.length) throw new Error('Nessun giorno trovato nel PDF. Formato non riconosciuto.');
+
+            // Rileva riunioni (lettere "RIUNIONE" nell'area x 370-420)
+            const riunioneYs = [];
+            for (const [top, rw] of rowsRaw) {
+                const s = rw.filter(w => w.x0 >= 370 && w.x0 <= 420).map(w => w.text).join('');
+                if (s.toUpperCase().includes('RIUNIONE')) riunioneYs.push(top);
+            }
+
+            // Parsing principale
+            const turniData = [];
+            for (let iDay = 0; iDay < dayRows.length; iDay++) {
+                const [, dayY, dayNum, dayAbbr] = dayRows[iDay];
+                const nextDayY = iDay+1 < dayRows.length ? dayRows[iDay+1][1] : dayY + 100;
+                const riunione = riunioneYs.some(ry => dayY < ry && ry < nextDayY);
+                const label    = (GIORNI[dayAbbr] || dayAbbr) + ' ' + dayNum + ' ' + meseStr;
+
+                let opsRow = null;
+                for (let ri = rowsRaw.length-1; ri >= 0; ri--) {
+                    const [y2, rw] = rowsRaw[ri];
+                    if (y2 >= dayY) continue;
+                    if (dayY - y2 > 20) break;
+                    if (rw.filter(w => OP_PAT.test(w.text) && !SKIP.has(w.text) && w.x0 > 40).length) {
+                        opsRow = rw; break;
+                    }
+                }
+                let timeRow = null;
+                for (const [y2, rw] of rowsRaw) {
+                    if (y2 <= dayY) continue;
+                    if (y2 - dayY > 20) break;
+                    if (rw.filter(w => TIME_PAT.test(w.text)).length) { timeRow = rw; break; }
+                }
+
+                const colOps = {};
+                if (opsRow) {
+                    for (const w of opsRow) {
+                        const col = getCol(w.x0);
+                        if (col && OP_PAT.test(w.text) && !SKIP.has(w.text)) colOps[col] = w.text;
+                    }
+                }
+                const colTimes = {};
+                if (timeRow) {
+                    const colVals = {};
+                    for (const w of [...timeRow].sort((a,b) => a.x0-b.x0)) {
+                        if (TIME_PAT.test(w.text)) {
+                            const col = getCol(w.x0);
+                            if (col) (colVals[col] = colVals[col] || []).push(w.text);
+                        }
+                    }
+                    for (const [col, vals] of Object.entries(colVals))
+                        colTimes[col] = vals.length >= 2
+                            ? vals[0].replace(',',':') + ' - ' + vals[1].replace(',',':')
+                            : vals[0].replace(',',':');
+                }
+
+                const shifts = Object.keys(colRanges)
+                    .filter(col => colOps[col])
+                    .map(col => ({ name: col, op: colOps[col], time: colTimes[col] || '' }));
+                for (const s of shifts)
+                    if (s.name === 'NOTTE 2' && !s.time.includes(' - ')) s.time = '0:00 - 9:00';
+
+                turniData.push({ id: dayNum, dayLabel: label, shifts, riunione });
+            }
+            turniData.sort((a, b) => a.id - b.id);
+
+            return {
+                success: true,
+                giorni:  turniData.length,
+                jsonFile: 'turni_' + meseStr.toLowerCase() + '_' + anno + '.json',
+                data:    turniData
+            };
+        }
+
         window.elaboraPdf = async function() {
             const fileInput = document.getElementById('pdfFile');
             if (!fileInput.files.length) { alert('Seleziona un file PDF.'); return; }
-            const formData = new FormData();
-            formData.append('pdf', fileInput.files[0]);
-            setStatus('Caricamento ed elaborazione PDF in corso...');
+            setStatus('Elaborazione PDF in corso...');
             try {
-                const res = await fetch('http://localhost:8080/api/parse', {
-                    method: 'POST',
-                    body: formData
-                });
-                const result = await res.json();
-                if (!res.ok) throw new Error(result.error || 'Errore sconosciuto');
+                // Parsing lato browser - nessun server necessario
+                const result = await parsePdfBrowser(fileInput.files[0]);
+                const res = { ok: true };
+                // Usa result direttamente (saltiamo il fetch al server)
+                if (true) {
                 if (result.jsonFile) {
                     const parts = result.jsonFile.replace('.json', '').split('_');
                     lastElaboratedMese = parts.length >= 3 ? `${parts[1]}_${parts[2]}` : null;
@@ -1966,10 +2156,9 @@
                 renderAgenda(turniData);
                 populateOperatorSelect();
                 setStatus(`✅ PDF elaborato: ${result.giorni} giorni. Clicca "Salva su Firebase" per sincronizzare.`);
-                // Spegni il server: non e' necessario per il salvataggio Firebase
-                fetch('http://localhost:8080/api/shutdown', { method: 'POST' }).catch(() => {});
                 document.getElementById('server-hint').innerHTML =
-                    '🟢 PDF elaborato — server spento. Puoi salvare su Firebase.';
+                    '🟢 PDF elaborato nel browser. Puoi salvare su Firebase (nessun server richiesto).';
+                } // end if(true)
             } catch (error) {
                 if (error.name === 'TypeError' || error.name === 'AbortError') {
                     setStatus('❌ Server locale non raggiungibile. Avvia server.py.');
