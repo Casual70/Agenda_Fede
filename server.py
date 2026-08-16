@@ -37,7 +37,7 @@ def parse():
             return jsonify({'error': 'Il file deve essere un PDF'}), 400
         f.save(os.path.join(BASE, pdf_name))
     else:
-        data     = request.get_json()
+        data     = request.get_json(silent=True)
         pdf_name = (data or {}).get('pdfName', '').strip()
         if not pdf_name:
             return jsonify({'error': 'Nome PDF mancante'}), 400
