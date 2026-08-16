@@ -1806,7 +1806,7 @@
                         ts.replaceWith(inp);
                     }
                 });
-                const curR = dayObj ? !!dayObj.riunione : false;
+                const curR = !!(turniData.find(d => d.id === dayId && (!dayMese || d.mese === dayMese)) || {}).riunione;
                 const reRow = document.createElement('div');
                 reRow.className = 'riunione-edit-row';
                 reRow.style.cssText = 'margin:0 0 8px;font-size:0.85em;color:#555';
