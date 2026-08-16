@@ -1,9 +1,10 @@
 import pdfplumber
 import json
 import re
+import sys
 
-# Range X corretti per colonna (calibrati dalle coordinate reali del PDF)
-COL_RANGES = {
+# Range X di fallback (usati solo se il rilevamento automatico fallisce)
+COL_RANGES_DEFAULT = {
     'NOTTE 2': (40,  82),
     'MATT 1':  (82,  117),
     'MATT 2':  (117, 158),
@@ -12,6 +13,8 @@ COL_RANGES = {
     'POM 2':   (250, 285),
     'NOTTE 1': (285, 342),
 }
+
+COL_RANGES = COL_RANGES_DEFAULT  # viene aggiornato da detect_col_ranges()
 
 GIORNI_IT = {
     'DO': 'Domenica', 'LU': 'Lunedì', 'MA': 'Martedì',
@@ -32,7 +35,42 @@ def get_col(x):
 def fmt_time(t):
     return t.replace(',', ':')
 
-import sys
+def detect_col_ranges(rows_raw):
+    """Rileva i range X delle colonne dall'intestazione del PDF (midpoint tra header adiacenti)."""
+    TURNO_LABELS = {'NOTTE', 'MATT', 'CENTR.', 'POM'}
+    header_row = None
+    for _top, rw in rows_raw[:15]:
+        if sum(1 for w in rw if w['text'] in TURNO_LABELS) >= 3:
+            header_row = rw
+            break
+    if not header_row:
+        return None
+
+    words_sorted = sorted(header_row, key=lambda w: w['x0'])
+    col_starts = {}
+    for i, w in enumerate(words_sorted):
+        if w['text'] == 'CENTR.':
+            col_starts['CENTR.'] = w['x0']
+        elif w['text'] in {'NOTTE', 'MATT', 'POM'}:
+            for j in range(i + 1, min(i + 4, len(words_sorted))):
+                nw = words_sorted[j]
+                if nw['text'] in {'1', '2'} and nw['x0'] - w['x0'] < 30:
+                    col_name = w['text'] + ' ' + nw['text']
+                    if col_name not in col_starts:
+                        col_starts[col_name] = w['x0']
+                    break
+
+    COL_ORDER = ['NOTTE 2', 'MATT 1', 'MATT 2', 'CENTR.', 'POM 1', 'POM 2', 'NOTTE 1']
+    present = [(c, col_starts[c]) for c in COL_ORDER if c in col_starts]
+    if len(present) < 4:
+        return None
+
+    col_ranges = {}
+    for i, (col, pos) in enumerate(present):
+        left  = present[i-1][1] + (pos - present[i-1][1]) / 2 if i > 0 else pos - 20
+        right = pos + (present[i+1][1] - pos) / 2 if i < len(present) - 1 else pos + 80
+        col_ranges[col] = (round(left, 1), round(right, 1))
+    return col_ranges
 
 # Accetta il nome del PDF come argomento oppure usa il default
 pdf_file = sys.argv[1] if len(sys.argv) > 1 else '2602_ TURNI FEBBRAIO 2026 - ORARIO.pdf'
@@ -68,6 +106,14 @@ for w in words:
     if not placed:
         rows_raw.append([w['top'], [w]])
 rows_raw.sort(key=lambda r: r[0])
+
+# Rileva le colonne dinamicamente dall'intestazione del PDF
+detected = detect_col_ranges(rows_raw)
+if detected:
+    COL_RANGES = detected
+    print(f"Colonne rilevate: { {k: tuple(round(v,1) for v in vv) for k,vv in COL_RANGES.items()} }")
+else:
+    print('Attenzione: rilevamento colonne fallito, uso range hardcoded')
 
 DAY_ABBR = re.compile(r'^(LU|MA|ME|GI|VE|SA|DO)$')
 NUM_PAT   = re.compile(r'^\d{1,2}$')
