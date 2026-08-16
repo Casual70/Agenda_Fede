@@ -2,16 +2,148 @@
   AGENDA TURNI - COME AGGIUNGERE UN NUOVO MESE
 ====================================================
 
-NOTA TECNICA - DUE PYTHON INSTALLATI
---------------------------------------
-Sul PC sono presenti due versioni di Python:
+FLUSSO ATTUALE (aggiornato agosto 2026)
+-----------------------------------------
+Il parsing del PDF avviene direttamente nel browser (PDF.js).
+NON serve più avviare il server locale né copiare il PDF nella cartella.
+
+
+====================================================
+  PROCEDURA COMPLETA PER UN NUOVO MESE
+====================================================
+
+PASSO 1 — APRI IL SITO
+------------------------
+Vai su:  https://casual70.github.io/Agenda_Fede/
+
+Oppure in locale:  http://localhost:8080  (solo se il server è attivo)
+
+
+PASSO 2 — IMPORTA IL PDF
+--------------------------
+1. Clicca  ⚙ Impostazioni  per aprire il pannello
+2. Clicca il campo file e seleziona il PDF del mese
+   es.  2608_TURNI AGOSTO 2026 - ORARIO.pdf
+3. Clicca  ⚙ Elabora PDF
+   → Il browser legge e interpreta il PDF senza server
+   → I turni appaiono immediatamente a schermo
+4. Verifica che tutti i giorni e gli operatori siano corretti
+
+
+PASSO 3 — SALVA SU FIREBASE
+-----------------------------
+1. Clicca  🗑 Svuota mese corrente  (o 🗑 Svuota tutto se serve)
+   → Conferma nel popup
+2. Clicca  💾 Salva su Firebase
+   → I dati vengono scritti su Firestore e visibili online
+
+
+PASSO 4 — MODIFICHE MANUALI (se necessario)
+---------------------------------------------
+Per correggere un operatore, un orario o la Riunione d'équipe:
+
+1. Clicca  ✏ modifica  sul giorno da cambiare
+2. Modifica operatori (menu a tendina) e/o orari (campo di testo)
+3. Spunta la casella "📋 Riunione d'équipe" se presente quel giorno
+4. Clicca  💾 salva  → aggiornato su Firebase in tempo reale
+
+
+PASSO 5 — AGGIORNA INDEX.HTML (opzionale, per dati di fallback)
+-----------------------------------------------------------------
+Solo se vuoi aggiornare i dati embedded in index.html (usati offline):
+
+  python inject_data.py turni_maggio_2026.json turni_giugno_2026.json
+
+Accetta più file JSON: li fonde e li inserisce in index.html.
+Poi:
+  git add index.html turni_MESE_2026.json
+  git commit -m "Turni MESE 2026"
+  git push
+
+
+====================================================
+  VISUALIZZAZIONE MULTI-MESE
+====================================================
+L'agenda supporta la visualizzazione di più mesi consecutivi.
+
+Per mostrare due mesi insieme (es. maggio + giugno):
+1. Elabora il PDF di maggio → Salva su Firebase
+2. Elabora il PDF di giugno → Salva su Firebase
+   (i mesi vengono fusi automaticamente, ordinati cronologicamente)
+
+Ogni mese ha un banner separatore colorato.
+Puoi rimuovere un mese singolo con  🗑 Svuota mese corrente
+dopo aver elaborato il PDF di quel mese.
+
+
+====================================================
+  METODO ALTERNATIVO — DA TERMINALE (utenti avanzati)
+====================================================
+
+1. Copia il PDF nella cartella del progetto
+
+2. Esegui il parser:
+     python parse_turni.py "2608_TURNI AGOSTO 2026 - ORARIO.pdf"
+   → Genera:  turni_agosto_2026.json
+
+3. Inietta i dati in index.html:
+     python inject_data.py turni_agosto_2026.json
+   → Aggiorna index.html con i nuovi dati embedded
+
+4. Pubblica su GitHub:
+     git add index.html turni_agosto_2026.json
+     git commit -m "Turni agosto 2026"
+     git push
+
+5. Apri il sito e usa  💾 Salva su Firebase
+
+
+====================================================
+  NOTE TECNICHE
+====================================================
+
+DUE PYTHON INSTALLATI
   - python (nel PATH) → C:\laragon\bin\python\python-3.10\python.exe
-                         Usato da "python server.py" — Flask e pdfplumber OK
+    Usato da "python server.py" — Flask e pdfplumber OK
+  - Python 3.13 → C:\Users\casua\AppData\Local\Programs\Python\Python313\
+    NON usare per il server (Flask/pdfplumber non garantiti)
 
-  - Python 3.13       → C:\Users\casua\AppData\Local\Programs\Python\Python313\python.exe
-                         NON usare per il server (Flask/pdfplumber non garantiti)
+SERVER LOCALE (non più obbligatorio)
+  Il file avvia.bat avvia il server e apre il browser automaticamente.
+  Il server si spegne da solo dopo l'elaborazione del PDF.
+  Utile solo come fallback se il parser browser non funziona.
 
-Usa sempre semplicemente "python" nel terminale per avviare il server.
+FIREBASE
+  Progetto:  agenda-fede
+  Database:  Firestore, collezione "turni"
+  Ogni documento ha i campi: id, dayLabel, shifts, riunione, mese
+
+GITHUB PAGES
+  URL:  https://casual70.github.io/Agenda_Fede/
+  Si aggiorna entro 1-2 minuti dal push.
+
+
+====================================================
+  RISOLUZIONE PROBLEMI
+====================================================
+
+IL PDF NON VIENE LETTO CORRETTAMENTE
+  → Verifica che il PDF sia il formato standard dei turni
+  → Il parser rileva automaticamente le colonne dall'intestazione
+  → Se un giorno manca o ha operatori sbagliati: usa ✏ modifica
+
+RIUNIONE D'EQUIPE NON RILEVATA AUTOMATICAMENTE
+  → Il parser tenta di rilevarla dal PDF
+  → In caso contrario: clicca ✏ modifica sul giorno,
+    spunta la casella e clicca 💾 salva
+
+FIREBASE NON SI AGGIORNA
+  → Controlla la connessione internet
+  → Riprova con 💾 Salva su Firebase
+
+IL SITO GITHUB NON SI AGGIORNA
+  → Aspetta 1-2 minuti dopo il push
+
 
 
 ====================================================
