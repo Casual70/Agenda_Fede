@@ -1993,7 +1993,8 @@
             const meseStr = MESI[meseNum];
 
             // Rileva range colonne dall'intestazione (midpoint tra header adiacenti)
-            const TURNO_LABELS = new Set(['NOTTE','MATT','CENTR.','POM']);
+            const COL_FULL = new Set(['NOTTE 2','NOTTE 1','MATT 1','MATT 2','POM 1','POM 2','CENTR.']);
+            const TURNO_LABELS = new Set(['NOTTE','MATT','CENTR.','POM',...COL_FULL]);
             let headerRow = null;
             for (const [, rw] of rowsRaw.slice(0, 15)) {
                 if (rw.filter(w => TURNO_LABELS.has(w.text)).length >= 3) { headerRow = rw; break; }
@@ -2005,6 +2006,7 @@
                 const colStarts = {};
                 for (let i = 0; i < ws.length; i++) {
                     const w = ws[i];
+                    if (COL_FULL.has(w.text)) { colStarts[w.text] = w.x0; continue; }
                     if (w.text === 'CENTR.') { colStarts['CENTR.'] = w.x0; continue; }
                     if (['NOTTE','MATT','POM'].includes(w.text)) {
                         for (let j = i+1; j < Math.min(i+4, ws.length); j++) {
@@ -2048,11 +2050,11 @@
                 const left = rw.filter(w => w.x0 < 50);
                 const texts = left.map(w => w.text);
                 if (texts.length >= 3 && texts[0]==='F' && texts[1]==='DO' && NUM_PAT.test(texts[2]))
-                    dayRows.push([idx, y, parseInt(texts[2]), 'DO']);
+                    dayRows.push([idx, y, parseInt(texts[2]), 'DO', rw]);
                 else if (texts.length >= 2 && DAY_ABBR.test(texts[0]) && NUM_PAT.test(texts[1]))
-                    dayRows.push([idx, y, parseInt(texts[1]), texts[0]]);
+                    dayRows.push([idx, y, parseInt(texts[1]), texts[0], rw]);
                 else if (texts.length >= 1 && /^(MA|ME|GI|VE|LU|SA)\d{2}$/.test(texts[0]))
-                    dayRows.push([idx, y, parseInt(texts[0].slice(2)), texts[0].slice(0,2)]);
+                    dayRows.push([idx, y, parseInt(texts[0].slice(2)), texts[0].slice(0,2), rw]);
             }
             console.log('[PDF.js] giorni trovati:', dayRows.length, dayRows.slice(0,2));
             if (!dayRows.length) throw new Error('Nessun giorno trovato nel PDF. Formato non riconosciuto.');
@@ -2067,18 +2069,22 @@
             // Parsing principale
             const turniData = [];
             for (let iDay = 0; iDay < dayRows.length; iDay++) {
-                const [, dayY, dayNum, dayAbbr] = dayRows[iDay];
+                const [, dayY, dayNum, dayAbbr, dayRw] = dayRows[iDay];
                 const nextDayY = iDay+1 < dayRows.length ? dayRows[iDay+1][1] : dayY + 100;
                 const riunione = riunioneYs.some(ry => dayY < ry && ry < nextDayY);
                 const label    = (GIORNI[dayAbbr] || dayAbbr) + ' ' + dayNum + ' ' + meseStr;
 
-                let opsRow = null;
-                for (let ri = rowsRaw.length-1; ri >= 0; ri--) {
-                    const [y2, rw] = rowsRaw[ri];
-                    if (y2 >= dayY) continue;
-                    if (dayY - y2 > 20) break;
-                    if (rw.filter(w => OP_PAT.test(w.text) && !SKIP.has(w.text) && w.x0 > 40).length) {
-                        opsRow = rw; break;
+                // PDF.js: ops nella stessa riga del giorno; pdfplumber: riga sopra
+                const sameRowOps = (dayRw || []).filter(w => OP_PAT.test(w.text) && !SKIP.has(w.text) && w.x0 > 40 && w.x0 < 370);
+                let opsRow = sameRowOps.length >= 2 ? dayRw : null;
+                if (!opsRow) {
+                    for (let ri = rowsRaw.length-1; ri >= 0; ri--) {
+                        const [y2, rw2] = rowsRaw[ri];
+                        if (y2 >= dayY) continue;
+                        if (dayY - y2 > 20) break;
+                        if (rw2.filter(w => OP_PAT.test(w.text) && !SKIP.has(w.text) && w.x0 > 40 && w.x0 < 370).length >= 2) {
+                            opsRow = rw2; break;
+                        }
                     }
                 }
                 let timeRow = null;
@@ -2091,6 +2097,7 @@
                 const colOps = {};
                 if (opsRow) {
                     for (const w of opsRow) {
+                        if (w.x0 >= 370) continue;
                         const col = getCol(w.x0);
                         if (col && OP_PAT.test(w.text) && !SKIP.has(w.text)) colOps[col] = w.text;
                     }
