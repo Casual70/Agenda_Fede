@@ -15,6 +15,8 @@ COL_RANGES_DEFAULT = {
 }
 
 COL_RANGES = COL_RANGES_DEFAULT  # viene aggiornato da detect_col_ranges()
+RIUNIONE_X_RANGE = (370, 420)    # colonna RIUNIONI E SUPERV.
+RIUNIONE_X_RANGE = (370, 420)    # colonna RIUNIONI E SUPERV.
 
 GIORNI_IT = {
     'DO': 'Domenica', 'LU': 'Lunedì', 'MA': 'Martedì',
@@ -141,7 +143,27 @@ for idx, (y, rw) in enumerate(rows_raw):
 
 print(f"Trovati {len(day_rows)} giorni: {[d[2] for d in day_rows]}")
 
-for (row_idx, day_y, day_num, day_abbr) in day_rows:
+# Rileva le y delle righe con "RIUNIONE" nella colonna RIUNIONI E SUPERV.
+riunione_ys = []
+for _top, rw in rows_raw:
+    chars = [w['text'] for w in rw if RIUNIONE_X_RANGE[0] <= w['x0'] <= RIUNIONE_X_RANGE[1]]
+    if 'RIUNIONE' in ''.join(chars).upper():
+        riunione_ys.append(_top)
+
+
+# Rileva le y delle righe con "RIUNIONE" nella colonna RIUNIONI E SUPERV.
+riunione_ys = []
+for _top, rw in rows_raw:
+    chars = [w['text'] for w in rw if RIUNIONE_X_RANGE[0] <= w['x0'] <= RIUNIONE_X_RANGE[1]]
+    if 'RIUNIONE' in ''.join(chars).upper():
+        riunione_ys.append(_top)
+
+
+for i_day, (row_idx, day_y, day_num, day_abbr) in enumerate(day_rows):
+    next_day_y = day_rows[i_day + 1][1] if i_day + 1 < len(day_rows) else day_y + 100
+    riunione = any(day_y < ry < next_day_y for ry in riunione_ys)
+    next_day_y = day_rows[i_day + 1][1] if i_day + 1 < len(day_rows) else day_y + 100
+    riunione = any(day_y < ry < next_day_y for ry in riunione_ys)
     label = f"{GIORNI_IT.get(day_abbr, day_abbr)} {day_num} {mese_str}"
 
     # Riga operatori: la riga y immediatamente precedente con nomi
@@ -195,7 +217,7 @@ for (row_idx, day_y, day_num, day_abbr) in day_rows:
         if op:
             shifts.append({'name': col, 'op': op, 'time': time})
 
-    turni_data.append({'id': day_num, 'dayLabel': label, 'shifts': shifts})
+    turni_data.append({'id': day_num, 'dayLabel': label, 'shifts': shifts, 'riunione': riunione})
 
 # Ordina per giorno
 turni_data.sort(key=lambda d: d['id'])

@@ -16,19 +16,25 @@
       {
         "name": "MATT 2",
         "op": "CHIA",
-        "time": "15:00 - 13:00"
+        "time": "12:00 - 15:00"
       },
       {
         "name": "POM 1",
+        "op": "PET",
+        "time": "15:00 - 20:00"
+      },
+      {
+        "name": "POM 2",
         "op": "ANNA",
-        "time": "20:00 - 16:00"
+        "time": "16:00 - 21:00"
       },
       {
         "name": "NOTTE 1",
         "op": "STE",
-        "time": "24:00"
+        "time": "20:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 2,
@@ -47,24 +53,25 @@
       {
         "name": "MATT 2",
         "op": "CAR",
-        "time": "15:00 - 13:00"
+        "time": "10:00 - 15:00"
       },
       {
         "name": "POM 1",
         "op": "BAD",
-        "time": "20:30 - 16:00"
+        "time": "15:00 - 20:30"
       },
       {
         "name": "POM 2",
         "op": "CHIA",
-        "time": "21:00 - 20:30"
+        "time": "16:00 - 21:00"
       },
       {
         "name": "NOTTE 1",
         "op": "PET",
-        "time": "24:00"
+        "time": "20:30 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 3,
@@ -83,19 +90,25 @@
       {
         "name": "CENTR.",
         "op": "ANNA",
-        "time": "18:30 - 14:30"
+        "time": "14:00 - 18:30"
       },
       {
         "name": "POM 1",
+        "op": "CAR",
+        "time": "14:30 - 21:00"
+      },
+      {
+        "name": "POM 2",
         "op": "ERME",
-        "time": "21:00 - 15:30"
+        "time": "15:30 - 22:30"
       },
       {
         "name": "NOTTE 1",
         "op": "FED",
-        "time": "24:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": true
   },
   {
     "id": 4,
@@ -113,15 +126,26 @@
       },
       {
         "name": "CENTR.",
+        "op": "CAR",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
         "op": "ERME",
-        "time": "19:00 - 15:00"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "BAD",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 5,
@@ -140,19 +164,25 @@
       {
         "name": "CENTR.",
         "op": "EMA",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "PET",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "CAR",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "ERME",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 6,
@@ -171,19 +201,25 @@
       {
         "name": "CENTR.",
         "op": "EMA",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "SAN",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "CHIA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "CAR",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 7,
@@ -201,20 +237,26 @@
       },
       {
         "name": "CENTR.",
+        "op": "CHIA",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
         "op": "ANNA",
-        "time": "19:00 - 15:00"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
         "op": "SAN",
-        "time": "22:30 - 22:00"
+        "time": "15:30 - 22:30"
       },
       {
         "name": "NOTTE 1",
         "op": "PET",
-        "time": "24:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 8,
@@ -233,19 +275,25 @@
       {
         "name": "MATT 2",
         "op": "FED",
-        "time": "15:00 - 13:00"
+        "time": "12:00 - 15:00"
       },
       {
         "name": "POM 1",
         "op": "CHIA",
-        "time": "20:00 - 16:00"
+        "time": "15:00 - 20:00"
       },
       {
         "name": "POM 2",
+        "op": "EMA",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "SAN",
-        "time": "21:00 - 20:00"
+        "time": "20:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 9,
@@ -264,19 +312,25 @@
       {
         "name": "MATT 2",
         "op": "PET",
-        "time": "15:00 - 13:00"
+        "time": "10:00 - 15:00"
       },
       {
-        "name": "CENTR.",
+        "name": "POM 1",
         "op": "ERME",
-        "time": "16:30 - 15:00"
+        "time": "15:00 - 20:30"
       },
       {
         "name": "POM 2",
+        "op": "FED",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "ANNA",
-        "time": "21:00 - 20:30"
+        "time": "20:30 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 10,
@@ -295,24 +349,25 @@
       {
         "name": "CENTR.",
         "op": "SAN",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "FED",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
         "op": "CHIA",
-        "time": "22:30 - 22:00"
+        "time": "15:30 - 22:30"
       },
       {
         "name": "NOTTE 1",
         "op": "PET",
-        "time": "24:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": true
   },
   {
     "id": 11,
@@ -331,19 +386,25 @@
       {
         "name": "CENTR.",
         "op": "STE",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
-        "op": "ERME",
-        "time": "21:00 - 15:30"
+        "op": "SAN",
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "ERME",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "BAD",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 12,
@@ -361,15 +422,26 @@
       },
       {
         "name": "CENTR.",
+        "op": "ANNA",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
         "op": "ERME",
-        "time": "19:00 - 15:00"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "SAN",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 13,
@@ -388,19 +460,25 @@
       {
         "name": "CENTR.",
         "op": "PET",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "STE",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "FED",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "ERME",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 14,
@@ -419,19 +497,25 @@
       {
         "name": "CENTR.",
         "op": "STE",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "CHIA",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "BAD",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "ANNA",
-        "time": "22:30 - 20:00"
+        "time": "20:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 17,
@@ -450,19 +534,25 @@
       {
         "name": "CENTR.",
         "op": "BAD",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
-        "op": "ANNA",
-        "time": "21:00 - 15:30"
+        "op": "CHIA",
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "ANNA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "SAN",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 18,
@@ -481,19 +571,25 @@
       {
         "name": "CENTR.",
         "op": "CHIA",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "FED",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "EMA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "CAR",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 19,
@@ -512,19 +608,25 @@
       {
         "name": "CENTR.",
         "op": "STE",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
-        "op": "ANNA",
-        "time": "21:00 - 15:30"
+        "op": "FED",
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "ANNA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "ERME",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 20,
@@ -543,19 +645,25 @@
       {
         "name": "CENTR.",
         "op": "STE",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "EMA",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "CAR",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "CHIA",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 21,
@@ -574,19 +682,25 @@
       {
         "name": "CENTR.",
         "op": "CAR",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
-        "op": "ANNA",
-        "time": "21:00 - 15:30"
+        "op": "FED",
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "ANNA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "SAN",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 22,
@@ -605,24 +719,25 @@
       {
         "name": "MATT 2",
         "op": "STE",
-        "time": "15:00 - 13:00"
+        "time": "12:00 - 15:00"
       },
       {
-        "name": "CENTR.",
+        "name": "POM 1",
         "op": "ERME",
-        "time": "17:30 - 15:00"
+        "time": "15:00 - 20:00"
       },
       {
         "name": "POM 2",
         "op": "EMA",
-        "time": "21:00 - 20:00"
+        "time": "16:00 - 21:00"
       },
       {
         "name": "NOTTE 1",
         "op": "FED",
-        "time": "24:00"
+        "time": "20:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 24,
@@ -640,15 +755,26 @@
       },
       {
         "name": "CENTR.",
+        "op": "ANNA",
+        "time": "14:00 - 19:00"
+      },
+      {
+        "name": "POM 1",
         "op": "ERME",
-        "time": "19:00 - 15:00"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "EMA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "BAD",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": true
   },
   {
     "id": 25,
@@ -667,19 +793,25 @@
       {
         "name": "CENTR.",
         "op": "CAR",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
-        "op": "ERME",
-        "time": "21:00 - 15:30"
+        "op": "SAN",
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "ERME",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "CHIA",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 26,
@@ -698,19 +830,25 @@
       {
         "name": "CENTR.",
         "op": "SAN",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
-        "op": "ANNA",
-        "time": "21:00 - 15:30"
+        "op": "FED",
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "ANNA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "ERME",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 27,
@@ -729,19 +867,25 @@
       {
         "name": "CENTR.",
         "op": "STE",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "BAD",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "EMA",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "CAR",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 28,
@@ -760,24 +904,25 @@
       {
         "name": "CENTR.",
         "op": "BAD",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "SAN",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
         "op": "STE",
-        "time": "22:30 - 22:00"
+        "time": "15:30 - 22:30"
       },
       {
         "name": "NOTTE 1",
         "op": "FED",
-        "time": "24:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 29,
@@ -796,19 +941,25 @@
       {
         "name": "MATT 2",
         "op": "ANNA",
-        "time": "15:00 - 13:00"
+        "time": "12:00 - 15:00"
       },
       {
         "name": "POM 1",
         "op": "SAN",
-        "time": "20:00 - 16:00"
+        "time": "15:00 - 20:00"
       },
       {
         "name": "POM 2",
+        "op": "CAR",
+        "time": "16:00 - 21:00"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "BAD",
-        "time": "21:00 - 20:00"
+        "time": "20:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   },
   {
     "id": 31,
@@ -827,18 +978,24 @@
       {
         "name": "CENTR.",
         "op": "BAD",
-        "time": "19:00 - 15:00"
+        "time": "14:00 - 19:00"
       },
       {
         "name": "POM 1",
         "op": "FED",
-        "time": "21:00 - 15:30"
+        "time": "15:00 - 21:00"
       },
       {
         "name": "POM 2",
+        "op": "PET",
+        "time": "15:30 - 22:30"
+      },
+      {
+        "name": "NOTTE 1",
         "op": "CAR",
-        "time": "22:30 - 22:00"
+        "time": "22:00 - 24:00"
       }
-    ]
+    ],
+    "riunione": false
   }
 ]
