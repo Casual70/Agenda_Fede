@@ -1822,8 +1822,8 @@
                 reRow.style.cssText = 'margin:0 0 8px;font-size:0.85em;color:#555';
                 reRow.innerHTML = `<label><input type="checkbox" class="check-riunione"${
                     curR ? ' checked' : ''}> 📋 Riunione d&apos;&eacute;quipe</label>`;
-                const ulEl = agendaItem.querySelector('ul.agenda-content');
-                ulEl.parentNode.insertBefore(reRow, ulEl);
+                const bodyDivEdit = agendaItem.querySelector('.agenda-body');
+                agendaItem.insertBefore(reRow, bodyDivEdit);
 
                 btn.classList.add('salva');
                 btn.textContent = '💾 salva';
