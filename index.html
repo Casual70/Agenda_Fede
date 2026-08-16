@@ -469,11 +469,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Dati aggiornati (31 giorni) — generati automaticamente da parse_turni.py
+        // Dati aggiornati (27 giorni) — generati automaticamente da parse_turni.py
         let turniDataMock = [
                     {
                                 "id": 1,
-                                "dayLabel": "Mercoledì 1 Luglio",
+                                "dayLabel": "Sabato 1 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -482,109 +482,99 @@
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "SAN",
-                                                        "time": "8:00 - 14:30"
+                                                        "op": "BAD",
+                                                        "time": "8:30 - 14:00"
                                             },
                                             {
-                                                        "name": "CENTR.",
-                                                        "op": "ERME",
-                                                        "time": "14:00 - 19:00"
+                                                        "name": "MATT 2",
+                                                        "op": "CHIA",
+                                                        "time": "15:00 - 13:00"
                                             },
                                             {
                                                         "name": "POM 1",
                                                         "op": "ANNA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "BAD",
-                                                        "time": "15:30 - 22:30"
+                                                        "time": "20:00 - 16:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "STE",
+                                                        "time": "24:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 2,
-                                "dayLabel": "Giovedì 2 Luglio",
+                                "dayLabel": "Domenica 2 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "STE",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ANNA",
-                                                        "time": "8:00 - 14:30"
+                                                        "op": "ERME",
+                                                        "time": "8:30 - 14:00"
                                             },
                                             {
-                                                        "name": "CENTR.",
-                                                        "op": "FED",
-                                                        "time": "14:00 - 19:00"
+                                                        "name": "MATT 2",
+                                                        "op": "CAR",
+                                                        "time": "15:00 - 13:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "EMA",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "BAD",
+                                                        "time": "20:30 - 16:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "15:30 - 22:30"
+                                                        "op": "CHIA",
+                                                        "time": "21:00 - 20:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "PET",
+                                                        "time": "24:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 3,
-                                "dayLabel": "Venerdì 3 Luglio",
+                                "dayLabel": "Lunedì 3 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "BAD",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "PET",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "CAR",
+                                                        "op": "EMA",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "STE",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "ANNA",
+                                                        "time": "18:30 - 14:30"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "15:30 - 22:30"
+                                                        "op": "ERME",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "NOTTE 1",
                                                         "op": "FED",
-                                                        "time": "22:00 - 24:00"
+                                                        "time": "24:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 4,
-                                "dayLabel": "Sabato 4 Luglio",
+                                "dayLabel": "Martedì 4 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
@@ -594,1032 +584,764 @@
                                             {
                                                         "name": "MATT 1",
                                                         "op": "CHIA",
-                                                        "time": "8:30 - 14:00"
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "CAR",
-                                                        "time": "12:00 - 15:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
+                                                        "name": "CENTR.",
                                                         "op": "ERME",
-                                                        "time": "15:00 - 20:30"
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 2",
                                                         "op": "BAD",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "EMA",
-                                                        "time": "20:30 - 24:00"
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 5,
-                                "dayLabel": "Domenica 5 Luglio",
+                                "dayLabel": "Mercoledì 5 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "EMA",
+                                                        "op": "BAD",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "STE",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "FED",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "FED",
-                                                        "time": "10:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "EMA",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CAR",
-                                                        "time": "15:00 - 20:30"
+                                                        "op": "PET",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "CHIA",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
                                                         "op": "ERME",
-                                                        "time": "20:30 - 24:00"
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 6,
-                                "dayLabel": "Lunedì 6 Luglio",
+                                "dayLabel": "Giovedì 6 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
                                                         "op": "ERME",
-                                                        "time": "0:00 - 9:30"
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "FED",
+                                                        "op": "ANNA",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "ANNA",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "EMA",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "SAN",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
                                                         "op": "CAR",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "22:00 - 24:00"
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 7,
-                                "dayLabel": "Martedì 7 Luglio",
+                                "dayLabel": "Venerdì 7 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "CAR",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "STE",
-                                                        "time": "8:00 - 14:00"
+                                                        "op": "EMA",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "ERME",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CAR",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ANNA",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "FED",
-                                                        "time": "15:30 - 22:30"
+                                                        "op": "SAN",
+                                                        "time": "22:30 - 22:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "PET",
+                                                        "time": "24:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 8,
-                                "dayLabel": "Mercoledì 8 Luglio",
+                                "dayLabel": "Sabato 8 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "SAN",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "PET",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
                                                         "op": "ERME",
-                                                        "time": "8:00 - 14:30"
+                                                        "time": "8:30 - 14:00"
                                             },
                                             {
-                                                        "name": "CENTR.",
-                                                        "op": "BAD",
-                                                        "time": "14:00 - 19:00"
+                                                        "name": "MATT 2",
+                                                        "op": "FED",
+                                                        "time": "15:00 - 13:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "CHIA",
+                                                        "time": "20:00 - 16:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ANNA",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "CAR",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "SAN",
+                                                        "time": "21:00 - 20:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 9,
-                                "dayLabel": "Giovedì 9 Luglio",
+                                "dayLabel": "Domenica 9 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CAR",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "SAN",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "SAN",
-                                                        "time": "8:00 - 14:30"
+                                                        "op": "STE",
+                                                        "time": "8:30 - 14:00"
+                                            },
+                                            {
+                                                        "name": "MATT 2",
+                                                        "op": "PET",
+                                                        "time": "15:00 - 13:00"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "PET",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "FED",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ERME",
+                                                        "time": "16:30 - 15:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "ANNA",
+                                                        "time": "21:00 - 20:30"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 10,
-                                "dayLabel": "Venerdì 10 Luglio",
+                                "dayLabel": "Lunedì 10 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "BAD",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "ANNA",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
+                                                        "op": "ERME",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "CAR",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "SAN",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "ANNA",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "FED",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "SAN",
-                                                        "time": "15:30 - 22:30"
+                                                        "op": "CHIA",
+                                                        "time": "22:30 - 22:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
-                                                        "op": "ERME",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "PET",
+                                                        "time": "24:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 11,
-                                "dayLabel": "Sabato 11 Luglio",
+                                "dayLabel": "Martedì 11 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "ERME",
+                                                        "op": "PET",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "BAD",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "FED",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "FED",
-                                                        "time": "12:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "STE",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "PET",
-                                                        "time": "15:00 - 20:30"
+                                                        "op": "ERME",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "SAN",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "ANNA",
-                                                        "time": "20:30 - 24:00"
+                                                        "op": "BAD",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 12,
-                                "dayLabel": "Domenica 12 Luglio",
+                                "dayLabel": "Mercoledì 12 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "ANNA",
+                                                        "op": "BAD",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "FED",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "STE",
-                                                        "time": "10:00 - 15:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CAR",
-                                                        "time": "15:00 - 20:30"
+                                                        "name": "CENTR.",
+                                                        "op": "ERME",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "BAD",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "FED",
-                                                        "time": "20:30 - 24:00"
+                                                        "op": "SAN",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 13,
-                                "dayLabel": "Lunedì 13 Luglio",
+                                "dayLabel": "Giovedì 13 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "FED",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "SAN",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ERME",
+                                                        "op": "CHIA",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "STE",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "PET",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "SAN",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "STE",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "PET",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "CAR",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "ERME",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 14,
-                                "dayLabel": "Martedì 14 Luglio",
+                                "dayLabel": "Venerdì 14 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CAR",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "CHIA",
-                                                        "time": "8:00 - 14:00"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
                                                         "op": "ERME",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "SAN",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 15,
-                                "dayLabel": "Mercoledì 15 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "PET",
-                                                        "time": "0:00 - 9:30"
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ERME",
-                                                        "time": "8:00 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "BAD",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "FED",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 16,
-                                "dayLabel": "Giovedì 16 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "SAN",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "BAD",
+                                                        "op": "PET",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
                                                         "op": "STE",
-                                                        "time": "14:00 - 19:00"
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
                                                         "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "FED",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "ANNA",
+                                                        "time": "22:30 - 20:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 17,
-                                "dayLabel": "Venerdì 17 Luglio",
+                                "dayLabel": "Lunedì 17 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
                                                         "op": "FED",
-                                                        "time": "0:00 - 9:30"
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "SAN",
+                                                        "op": "STE",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "CHIA",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "BAD",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "PET",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ANNA",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "BAD",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "STE",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "SAN",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 18,
-                                "dayLabel": "Sabato 18 Luglio",
+                                "dayLabel": "Martedì 18 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "STE",
+                                                        "op": "SAN",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "BAD",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "ERME",
-                                                        "time": "12:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "CHIA",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "EMA",
-                                                        "time": "15:00 - 20:30"
+                                                        "op": "FED",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "CHIA",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "20:30 - 24:00"
+                                                        "op": "CAR",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 19,
-                                "dayLabel": "Domenica 19 Luglio",
+                                "dayLabel": "Mercoledì 19 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "BAD",
+                                                        "op": "CAR",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "SAN",
-                                                        "time": "8:30 - 14:00"
+                                                        "op": "CHIA",
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "EMA",
-                                                        "time": "10:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "STE",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "PET",
-                                                        "time": "15:00 - 20:30"
+                                                        "op": "ANNA",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "FED",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
                                                         "op": "ERME",
-                                                        "time": "20:30 - 24:00"
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 20,
-                                "dayLabel": "Lunedì 20 Luglio",
+                                "dayLabel": "Giovedì 20 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
                                                         "op": "ERME",
-                                                        "time": "0:00 - 9:30"
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
+                                                        "op": "SAN",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "EMA",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "STE",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "EMA",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "FED",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "CHIA",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 21,
-                                "dayLabel": "Martedì 21 Luglio",
+                                "dayLabel": "Venerdì 21 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "SAN",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "CHIA",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
                                                         "op": "ERME",
-                                                        "time": "8:00 - 14:00"
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "BAD",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "CAR",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "PET",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ANNA",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "STE",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "CHIA",
-                                                        "time": "22:00 - 24:00"
+                                                        "op": "SAN",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 22,
-                                "dayLabel": "Mercoledì 22 Luglio",
+                                "dayLabel": "Sabato 22 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CHIA",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "SAN",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "8:00 - 14:30"
+                                                        "op": "CAR",
+                                                        "time": "8:30 - 14:00"
+                                            },
+                                            {
+                                                        "name": "MATT 2",
+                                                        "op": "STE",
+                                                        "time": "15:00 - 13:00"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "ANNA",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ERME",
+                                                        "time": "17:30 - 15:00"
                                             },
                                             {
                                                         "name": "POM 2",
                                                         "op": "EMA",
-                                                        "time": "15:30 - 22:30"
+                                                        "time": "21:00 - 20:00"
                                             },
                                             {
                                                         "name": "NOTTE 1",
                                                         "op": "FED",
-                                                        "time": "22:00 - 24:00"
+                                                        "time": "24:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 23,
-                                "dayLabel": "Giovedì 23 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "FED",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "ANNA",
-                                                        "time": "8:00 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "BAD",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "SAN",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "PET",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "CAR",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 24,
-                                "dayLabel": "Venerdì 24 Luglio",
+                                "dayLabel": "Lunedì 24 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "CAR",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "EMA",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "STE",
+                                                        "op": "SAN",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "EMA",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "CHIA",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "ERME",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 2",
                                                         "op": "BAD",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "22:00 - 24:00"
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 25,
-                                "dayLabel": "Sabato 25 Luglio",
+                                "dayLabel": "Martedì 25 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "SAN",
+                                                        "op": "BAD",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
                                                         "op": "ANNA",
-                                                        "time": "8:30 - 14:00"
+                                                        "time": "8:00 - 14:30"
                                             },
                                             {
-                                                        "name": "MATT 2",
-                                                        "op": "CHIA",
-                                                        "time": "12:00 - 15:00"
+                                                        "name": "CENTR.",
+                                                        "op": "CAR",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "CAR",
-                                                        "time": "15:00 - 20:30"
+                                                        "op": "ERME",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "20:30 - 24:00"
+                                                        "op": "CHIA",
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 26,
-                                "dayLabel": "Domenica 26 Luglio",
+                                "dayLabel": "Mercoledì 26 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
+                                                        "op": "CHIA",
                                                         "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "CHIA",
+                                                        "op": "CAR",
+                                                        "time": "8:00 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "SAN",
+                                                        "time": "19:00 - 15:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "ANNA",
+                                                        "time": "21:00 - 15:30"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "ERME",
+                                                        "time": "22:30 - 22:00"
+                                            }
+                                ],
+                                "mese": "agosto_2026"
+                    },
+                    {
+                                "id": 27,
+                                "dayLabel": "Giovedì 27 Agosto",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "ERME",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "SAN",
+                                                        "time": "8:00 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "STE",
+                                                        "time": "19:00 - 15:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "BAD",
+                                                        "time": "21:00 - 15:30"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "CAR",
+                                                        "time": "22:30 - 22:00"
+                                            }
+                                ],
+                                "mese": "agosto_2026"
+                    },
+                    {
+                                "id": 28,
+                                "dayLabel": "Venerdì 28 Agosto",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "CAR",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "ERME",
+                                                        "time": "8:00 - 14:30"
+                                            },
+                                            {
+                                                        "name": "CENTR.",
+                                                        "op": "BAD",
+                                                        "time": "19:00 - 15:00"
+                                            },
+                                            {
+                                                        "name": "POM 1",
+                                                        "op": "SAN",
+                                                        "time": "21:00 - 15:30"
+                                            },
+                                            {
+                                                        "name": "POM 2",
+                                                        "op": "STE",
+                                                        "time": "22:30 - 22:00"
+                                            },
+                                            {
+                                                        "name": "NOTTE 1",
+                                                        "op": "FED",
+                                                        "time": "24:00"
+                                            }
+                                ],
+                                "mese": "agosto_2026"
+                    },
+                    {
+                                "id": 29,
+                                "dayLabel": "Sabato 29 Agosto",
+                                "shifts": [
+                                            {
+                                                        "name": "NOTTE 2",
+                                                        "op": "FED",
+                                                        "time": "0:00 - 9:00"
+                                            },
+                                            {
+                                                        "name": "MATT 1",
+                                                        "op": "ERME",
                                                         "time": "8:30 - 14:00"
                                             },
                                             {
                                                         "name": "MATT 2",
-                                                        "op": "CAR",
-                                                        "time": "10:00 - 15:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "SAN",
-                                                        "time": "15:00 - 20:30"
-                                            },
-                                            {
-                                                        "name": "POM 2",
                                                         "op": "ANNA",
-                                                        "time": "16:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "STE",
-                                                        "time": "20:30 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 27,
-                                "dayLabel": "Lunedì 27 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "STE",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "PET",
-                                                        "time": "8:00 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "CHIA",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "ANNA",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "ERME",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "BAD",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 28,
-                                "dayLabel": "Martedì 28 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "BAD",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "EMA",
-                                                        "time": "8:00 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "CAR",
-                                                        "time": "14:00 - 19:00"
+                                                        "time": "15:00 - 13:00"
                                             },
                                             {
                                                         "name": "POM 1",
                                                         "op": "SAN",
-                                                        "time": "15:00 - 21:00"
+                                                        "time": "20:00 - 16:00"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "PET",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "ERME",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 29,
-                                "dayLabel": "Mercoledì 29 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "ERME",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
-                                                        "op": "CAR",
-                                                        "time": "8:00 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "STE",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "PET",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "CHIA",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "SAN",
-                                                        "time": "22:00 - 24:00"
-                                            }
-                                ],
-                                "mese": "luglio_2026"
-                    },
-                    {
-                                "id": 30,
-                                "dayLabel": "Giovedì 30 Luglio",
-                                "shifts": [
-                                            {
-                                                        "name": "NOTTE 2",
-                                                        "op": "SAN",
-                                                        "time": "0:00 - 9:30"
-                                            },
-                                            {
-                                                        "name": "MATT 1",
                                                         "op": "BAD",
-                                                        "time": "8:00 - 14:30"
-                                            },
-                                            {
-                                                        "name": "CENTR.",
-                                                        "op": "CAR",
-                                                        "time": "14:00 - 19:00"
-                                            },
-                                            {
-                                                        "name": "POM 1",
-                                                        "op": "ERME",
-                                                        "time": "15:00 - 21:00"
-                                            },
-                                            {
-                                                        "name": "POM 2",
-                                                        "op": "EMA",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
-                                                        "op": "PET",
-                                                        "time": "22:00 - 24:00"
+                                                        "time": "21:00 - 20:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     },
                     {
                                 "id": 31,
-                                "dayLabel": "Venerdì 31 Luglio",
+                                "dayLabel": "Lunedì 31 Agosto",
                                 "shifts": [
                                             {
                                                         "name": "NOTTE 2",
-                                                        "op": "PET",
-                                                        "time": "0:00 - 9:30"
+                                                        "op": "SAN",
+                                                        "time": "0:00 - 9:00"
                                             },
                                             {
                                                         "name": "MATT 1",
-                                                        "op": "ANNA",
+                                                        "op": "EMA",
                                                         "time": "8:00 - 14:30"
                                             },
                                             {
                                                         "name": "CENTR.",
-                                                        "op": "ERME",
-                                                        "time": "14:00 - 19:00"
+                                                        "op": "BAD",
+                                                        "time": "19:00 - 15:00"
                                             },
                                             {
                                                         "name": "POM 1",
-                                                        "op": "STE",
-                                                        "time": "15:00 - 21:00"
+                                                        "op": "FED",
+                                                        "time": "21:00 - 15:30"
                                             },
                                             {
                                                         "name": "POM 2",
-                                                        "op": "BAD",
-                                                        "time": "15:30 - 22:30"
-                                            },
-                                            {
-                                                        "name": "NOTTE 1",
                                                         "op": "CAR",
-                                                        "time": "22:00 - 24:00"
+                                                        "time": "22:30 - 22:00"
                                             }
                                 ],
-                                "mese": "luglio_2026"
+                                "mese": "agosto_2026"
                     }
         ];
-        let turniMeseLabel = "LUGLIO 2026"; // aggiornato dinamicamente da elaboraPdf / inject_data.py
+        let turniMeseLabel = "AGOSTO 2026"; // aggiornato dinamicamente da elaboraPdf / inject_data.py
 
         let turniData = [];
         let lastElaboratedMese = null;
