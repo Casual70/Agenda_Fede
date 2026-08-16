@@ -6,7 +6,7 @@ Poi apri:   http://localhost:5000
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-import subprocess, sys, os, json
+import subprocess, sys, os, json, threading
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
@@ -20,6 +20,11 @@ def index():
 
 @app.route('/api/status')
 def status():
+    return jsonify({'ok': True})
+
+@app.route('/api/shutdown', methods=['POST'])
+def shutdown():
+    threading.Timer(0.5, lambda: os._exit(0)).start()
     return jsonify({'ok': True})
 
 @app.route('/api/parse', methods=['POST'])
@@ -88,5 +93,6 @@ if __name__ == '__main__':
     print("=" * 50)
     print("  Server Agenda Turni avviato!")
     print("  Apri: http://localhost:8080")
+    print("  Si spegne automaticamente dopo l'elaborazione.")
     print("=" * 50)
     app.run(host='127.0.0.1', port=8080, debug=False)

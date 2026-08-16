@@ -1966,6 +1966,10 @@
                 renderAgenda(turniData);
                 populateOperatorSelect();
                 setStatus(`✅ PDF elaborato: ${result.giorni} giorni. Clicca "Salva su Firebase" per sincronizzare.`);
+                // Spegni il server: non e' necessario per il salvataggio Firebase
+                fetch('http://localhost:8080/api/shutdown', { method: 'POST' }).catch(() => {});
+                document.getElementById('server-hint').innerHTML =
+                    '🟢 PDF elaborato — server spento. Puoi salvare su Firebase.';
             } catch (error) {
                 if (error.name === 'TypeError' || error.name === 'AbortError') {
                     setStatus('❌ Server locale non raggiungibile. Avvia server.py.');
