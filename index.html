@@ -1722,13 +1722,13 @@
                 const reRow = agendaItem.querySelector('.riunione-edit-row');
                 if (reRow) reRow.remove();
                 const bodyDiv = agendaItem.querySelector('.agenda-body');
-                const oldBadge = bodyDiv.querySelector('.riunione-badge');
+                const oldBadge = agendaItem.querySelector('.riunione-badge');
                 if (oldBadge) oldBadge.remove();
                 if (dayObj && dayObj.riunione) {
                     const badge = document.createElement('div');
                     badge.className = 'riunione-badge';
                     badge.textContent = '📋 Riunione d\'équipe';
-                    bodyDiv.insertBefore(badge, bodyDiv.firstChild);
+                    agendaItem.insertBefore(badge, bodyDiv);
                 }
 
                 righe.forEach(li => {
@@ -1757,6 +1757,16 @@
                         timeInp.replaceWith(tsp);
                     }
                 });
+
+                // Aggiorna Gantt in tempo reale
+                if (dayObj) {
+                    const oldGantt = bodyDiv.querySelector('.gantt-day');
+                    if (oldGantt) {
+                        const tmp = document.createElement('div');
+                        tmp.innerHTML = buildGantt(dayObj);
+                        oldGantt.replaceWith(tmp.firstChild);
+                    }
+                }
 
                 btn.classList.remove('salva');
                 btn.textContent = '✏ modifica';
