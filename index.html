@@ -2028,6 +2028,9 @@
                     }
                 }
             }
+            console.log('[PDF.js] viewport:', viewport.width.toFixed(1), 'x', viewport.height.toFixed(1));
+            console.log('[PDF.js] colRanges:', JSON.stringify(colRanges));
+            rowsRaw.slice(0, 10).forEach(([y, rw]) => console.log('[PDF.js] y=' + y.toFixed(1), rw.map(w => w.text+'@'+w.x0.toFixed(1)).join(' ')));
             const getCol = x => Object.entries(colRanges).find(([,[x0,x1]]) => x >= x0 && x < x1)?.[0] || null;
 
             // Pattern
@@ -2051,6 +2054,7 @@
                 else if (texts.length >= 1 && /^(MA|ME|GI|VE|LU|SA)\d{2}$/.test(texts[0]))
                     dayRows.push([idx, y, parseInt(texts[0].slice(2)), texts[0].slice(0,2)]);
             }
+            console.log('[PDF.js] giorni trovati:', dayRows.length, dayRows.slice(0,2));
             if (!dayRows.length) throw new Error('Nessun giorno trovato nel PDF. Formato non riconosciuto.');
 
             // Rileva riunioni (lettere "RIUNIONE" nell'area x 370-420)
