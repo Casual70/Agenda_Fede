@@ -434,7 +434,7 @@
             <div class="settings-panel" id="settings-panel">
                 <h3 style="margin-top:10px; color:var(--primary-color); font-size:1em;">📄 Importazione PDF <span style="font-weight:normal; font-size:0.85em; color:var(--text-light);">(richiede server locale)</span></h3>
                 <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                    <input type="text" id="pdfFileName" placeholder="Es. 2603_ TURNI MAGGIO 2026 - ORARIO.pdf" style="padding:6px; flex:1; min-width:250px;">
+                    <input type="file" id="pdfFile" accept=".pdf" style="flex:1; min-width:220px; cursor:pointer;">
                     <button onclick="elaboraPdf()">⚙ Elabora PDF</button>
                     <button onclick="salvaFirebase()" style="background-color:#2e7d32;">💾 Salva su Firebase</button>
                 </div>
@@ -1932,14 +1932,15 @@
 
         // Elabora PDF tramite server locale e aggiorna turniData
         window.elaboraPdf = async function() {
-            const pdfName = document.getElementById('pdfFileName').value.trim();
-            if (!pdfName) { alert('Inserisci il nome del file PDF.'); return; }
-            setStatus('Elaborazione PDF in corso...');
+            const fileInput = document.getElementById('pdfFile');
+            if (!fileInput.files.length) { alert('Seleziona un file PDF.'); return; }
+            const formData = new FormData();
+            formData.append('pdf', fileInput.files[0]);
+            setStatus('Caricamento ed elaborazione PDF in corso...');
             try {
                 const res = await fetch('http://localhost:8080/api/parse', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ pdfName })
+                    body: formData
                 });
                 const result = await res.json();
                 if (!res.ok) throw new Error(result.error || 'Errore sconosciuto');

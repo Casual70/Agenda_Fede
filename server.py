@@ -5,6 +5,7 @@ Poi apri:   http://localhost:5000
 """
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 import subprocess, sys, os, json
 
 app = Flask(__name__, static_folder='.', static_url_path='')
@@ -23,15 +24,21 @@ def status():
 
 @app.route('/api/parse', methods=['POST'])
 def parse():
-    data     = request.get_json()
-    pdf_name = (data or {}).get('pdfName', '').strip()
-
-    if not pdf_name:
-        return jsonify({'error': 'Nome PDF mancante'}), 400
-
-    pdf_path = os.path.join(BASE, pdf_name)
-    if not os.path.exists(pdf_path):
-        return jsonify({'error': f'File non trovato nella cartella: {pdf_name}'}), 404
+    # Accetta sia upload multipart che JSON con nome file
+    if 'pdf' in request.files:
+        f = request.files['pdf']
+        pdf_name = secure_filename(f.filename)
+        if not pdf_name.lower().endswith('.pdf'):
+            return jsonify({'error': 'Il file deve essere un PDF'}), 400
+        f.save(os.path.join(BASE, pdf_name))
+    else:
+        data     = request.get_json()
+        pdf_name = (data or {}).get('pdfName', '').strip()
+        if not pdf_name:
+            return jsonify({'error': 'Nome PDF mancante'}), 400
+        pdf_path = os.path.join(BASE, pdf_name)
+        if not os.path.exists(pdf_path):
+            return jsonify({'error': f'File non trovato: {pdf_name}'}), 404
 
     # 1. Esegui il parser
     r1 = subprocess.run(
