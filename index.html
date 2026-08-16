@@ -306,11 +306,11 @@
         .info-panel ol { margin: 4px 0 0 16px; padding: 0; }
         .info-panel li { margin-bottom: 3px; }
         .btn-info {
-            background: none; border: none;
-            color: var(--primary-color); font-size: 1.15em; cursor: pointer;
-            vertical-align: middle; margin-left: 5px; padding: 0 3px; opacity: 0.7;
+            background: none; border: 1px solid var(--primary-color);
+            color: var(--primary-color); font-size: 1em; cursor: pointer;
+            padding: 0 9px; border-radius: 4px; opacity: 0.75;
         }
-        .btn-info:hover { opacity: 1; }
+        .btn-info:hover { opacity: 1; background: #f0f8f8; }
 
         /* Select filtro operatore */
         #filterSelect {
@@ -445,8 +445,10 @@
             </div>
 
             <!-- Toggle impostazioni -->
-            <button class="settings-toggle" onclick="toggleSettings()">⚙ Impostazioni ▾</button>
-            <button class="btn-info" onclick="toggleInfo()" title="Come funziona">ⓘ</button>
+            <div style="display:inline-flex; align-items:center; gap:6px;">
+                <button class="settings-toggle" onclick="toggleSettings()">⚙ Impostazioni ▾</button>
+                <button class="btn-info" onclick="toggleInfo()" title="Come funziona">ⓘ</button>
+            </div>
             <div class="info-panel" id="info-panel">
                 <strong>Come caricare un nuovo mese</strong>
                 <ol>
