@@ -297,6 +297,20 @@
         }
         .settings-panel { display: none; }
         .settings-panel.open { display: block; }
+        .info-panel {
+            display: none; background: #f0f6fb; border: 1px solid #aed6f1;
+            border-radius: 6px; padding: 12px 16px; margin: 8px 0 0;
+            font-size: 0.83em; color: var(--text-main); line-height: 1.7;
+        }
+        .info-panel.open { display: block; }
+        .info-panel ol { margin: 4px 0 0 16px; padding: 0; }
+        .info-panel li { margin-bottom: 3px; }
+        .btn-info {
+            background: none; border: 1px solid var(--primary-color);
+            color: var(--primary-color); border-radius: 50%; width: 24px; height: 24px;
+            font-size: 0.85em; cursor: pointer; font-weight: bold;
+            vertical-align: middle; margin-left: 6px; line-height: 22px; padding: 0;
+        }
 
         /* Select filtro operatore */
         #filterSelect {
@@ -432,14 +446,30 @@
 
             <!-- Toggle impostazioni -->
             <button class="settings-toggle" onclick="toggleSettings()">⚙ Impostazioni ▾</button>
+            <button class="btn-info" onclick="toggleInfo()" title="Come funziona">ⓘ</button>
+            <div class="info-panel" id="info-panel">
+                <strong>Come caricare un nuovo mese</strong>
+                <ol>
+                    <li>Clicca <em>⚙ Impostazioni</em> e seleziona il <strong>file PDF</strong> del mese</li>
+                    <li>Clicca <strong>⚙ Elabora PDF</strong> — il browser lo legge direttamente, nessun server necessario</li>
+                    <li>Verifica i turni mostrati a schermo</li>
+                    <li>Clicca <strong>💾 Salva su Firebase</strong> per rendere i dati visibili online</li>
+                </ol>
+                <strong>Per modificare turni, orari o riunione d'équipe</strong>
+                <ol>
+                    <li>Clicca <strong>✏ modifica</strong> sul giorno da cambiare</li>
+                    <li>Modifica operatori, orari o spunta la casella Riunione</li>
+                    <li>Clicca <strong>💾 salva</strong> — i dati vengono aggiornati su Firebase</li>
+                </ol>
+            </div>
             <div class="settings-panel" id="settings-panel">
-                <h3 style="margin-top:10px; color:var(--primary-color); font-size:1em;">📄 Importazione PDF <span style="font-weight:normal; font-size:0.85em; color:var(--text-light);">(richiede server locale)</span></h3>
+                <h3 style="margin-top:10px; color:var(--primary-color); font-size:1em;">📄 Importazione PDF</h3>
                 <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
                     <input type="file" id="pdfFile" accept=".pdf" style="flex:1; min-width:220px; cursor:pointer;">
                     <button onclick="elaboraPdf()">⚙ Elabora PDF</button>
                     <button onclick="salvaFirebase()" style="background-color:#2e7d32;">💾 Salva su Firebase</button>
                 </div>
-                <p id="server-hint" style="margin:8px 0 0; font-size:0.78em; color:var(--text-light);">Avvia <strong>server.py</strong> localmente per usare l'importazione.</p>
+                <p id="server-hint" style="margin:8px 0 0; font-size:0.78em; color:var(--text-light);">Seleziona il PDF e clicca Elabora — nessun server necessario.</p>
                 <hr style="border:0; border-top:1px solid #ddd; margin:12px 0 10px;">
                 <button onclick="svuotaMeseCorrente()" style="background-color:#e67e22;">🗑 Svuota mese corrente</button>
                 <button onclick="svuotaCollection()" style="background-color:#c0392b; margin-left:6px;">🗑 Svuota tutto</button>
@@ -1579,6 +1609,10 @@
             const btn   = document.querySelector('.settings-toggle');
             panel.classList.toggle('open');
             btn.textContent = panel.classList.contains('open') ? '⚙ Impostazioni ▴' : '⚙ Impostazioni ▾';
+        }
+
+        window.toggleInfo = function() {
+            document.getElementById('info-panel').classList.toggle('open');
         }
 
         function buildGantt(dayData) {
